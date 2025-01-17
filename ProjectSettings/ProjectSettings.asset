@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: 7477f11dbc84dae4092d037da49895f4
+  productGUID: 87e61f04944c5854ea8a10b05140969d
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Card
+  productName: My project
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -676,14 +676,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Card
+  metroPackageName: My project
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Card
+  metroApplicationDescription: My project
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -752,11 +752,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 302443ef-301f-4f1e-ad2f-b8eb712fa474
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: My project
+  organizationId: gregauriz24
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
