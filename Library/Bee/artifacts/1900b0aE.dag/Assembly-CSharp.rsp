@@ -355,6 +355,8 @@
 "Assets/ButtonAction.cs"
 "Assets/Scripts/CardManager.cs"
 "Assets/Scripts/UIManager.cs"
+"Assets/TextMesh Pro/Card/CardDefinition.cs"
+"Assets/TextMesh Pro/Card/CardDisplay.cs"
 -langversion:9.0
 
 /deterministic

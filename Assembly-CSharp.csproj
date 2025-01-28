@@ -63,6 +63,8 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\TextMesh Pro\Card\CardDisplay.cs" />
+    <Compile Include="Assets\TextMesh Pro\Card\CardDefinition.cs" />
     <Compile Include="Assets\ButtonAction.cs" />
     <Compile Include="Assets\Scripts\CardManager.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
