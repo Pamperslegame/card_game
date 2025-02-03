@@ -63,16 +63,10 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Assets\TextMesh Pro\Card\CardDisplay.cs" />
-    <Compile Include="Assets\TextMesh Pro\Card\CardDefinition.cs" />
-    <Compile Include="Assets\ButtonAction.cs" />
-=======
+    <Compile Include="Assets\Scripts\CardDefinition.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
->>>>>>> d399fb0519a2dc2901d9fc68ba9611bb2425f1e5
-    <Compile Include="Assets\Scripts\CardManager.cs" />
-    <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\SceneLoaderPlay.cs" />
+    <Compile Include="Assets\Scripts\CardInitialisation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

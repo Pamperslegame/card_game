@@ -353,11 +353,9 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/SceneLoaderPlay.cs"
-"Assets/Scripts/CardManager.cs"
+"Assets/Scripts/CardDefinition.cs"
+"Assets/Scripts/CardInitialisation.cs"
 "Assets/Scripts/SceneLoader.cs"
-"Assets/Scripts/UIManager.cs"
-"Assets/TextMesh Pro/Card/CardDefinition.cs"
-"Assets/TextMesh Pro/Card/CardDisplay.cs"
 -langversion:9.0
 
 /deterministic
