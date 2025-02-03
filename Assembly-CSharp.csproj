@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CardDefinition.cs" />
+    <Compile Include="Assets\Scripts\ShowHidePanel.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\SceneLoaderPlay.cs" />
     <Compile Include="Assets\Scripts\CardInitialisation.cs" />

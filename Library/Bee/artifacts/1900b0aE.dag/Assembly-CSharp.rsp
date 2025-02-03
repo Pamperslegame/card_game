@@ -356,6 +356,7 @@
 "Assets/Scripts/CardDefinition.cs"
 "Assets/Scripts/CardInitialisation.cs"
 "Assets/Scripts/SceneLoader.cs"
+"Assets/Scripts/ShowHidePanel.cs"
 -langversion:9.0
 
 /deterministic
