@@ -1,18 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Card : MonoBehaviour
+public class Carte : MonoBehaviour
 {
-    public CardDefinition CardDefinition;
+    public CardDefinition DéfinitionCarte;
+    public GameObject Cadre;
+    public GameObject Image;
+
+    private SpriteRenderer cadreRenderer;
+    private SpriteRenderer imageRenderer;
 
     void Start()
     {
+        if (Cadre != null) cadreRenderer = Cadre.GetComponent<SpriteRenderer>();
+        if (Image != null) imageRenderer = Image.GetComponent<SpriteRenderer>();
 
-    }
+        if (DéfinitionCarte != null)
+        {
+            if (cadreRenderer != null)
+            {
+                cadreRenderer.sprite = DéfinitionCarte.CardImage2;
+            }
+            else
+            {
+                Debug.LogWarning("SpriteRenderer du cadre non trouvé !");
+            }
 
-    void Update()
-    {
-
+            if (imageRenderer != null)
+            {
+                imageRenderer.sprite = DéfinitionCarte.CardImage;
+            }
+            else
+            {
+                Debug.LogWarning("SpriteRenderer de l'image non trouvé !");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Aucune définition de carte assignée !");
+        }
     }
 }
