@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 C:\Users\ruitz\OneDrive\Documents\GitHub\card_game
+=======
+C:\Users\Biout\Documents\GitHub\card_game
+>>>>>>> Stashed changes
