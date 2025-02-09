@@ -8,21 +8,19 @@ public class CardDefinition : ScriptableObject
     [SerializeField] private int damage;
     [SerializeField] private int cost;
     [SerializeField] private Sprite cardImage;
-    [SerializeField] private Sprite cardImage2;
+
     public int Health => health;
     public int MaxHealth => maxHealth;
     public int Damage => damage;
     public int Cost => cost;
     public Sprite CardImage => cardImage;
-    public Sprite CardImage2 => cardImage2;
 
-    public void Initialize(int health, int maxHealth, int damage, int cost, Sprite image, Sprite image2)
+    public void Initialize(int health, int maxHealth, int damage, int cost, Sprite image)
     {
         this.health = health;
         this.maxHealth = maxHealth;
         this.damage = damage;
         this.cost = cost;
         this.cardImage = image;
-        this.cardImage2 = image2;
     }
 }

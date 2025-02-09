@@ -1,6 +1,7 @@
 Base path: 'C:/Users/Biout/Desktop/UnityDL/2022.3.21f1/Editor/Data', plugins path 'C:/Users/Biout/Desktop/UnityDL/2022.3.21f1/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 Cmd: preprocess
@@ -44,3 +45,6 @@ Cmd: preprocess
 
 Cmd: shutdown
 >>>>>>> Stashed changes
+=======
+Cmd: shutdown
+>>>>>>> parent of d195cdf (Prefabs de la Carte créé)
