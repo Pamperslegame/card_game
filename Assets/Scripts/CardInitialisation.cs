@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Card : MonoBehaviour
@@ -15,9 +13,11 @@ public class Card : MonoBehaviour
     {
         if (Cadre != null) cadreRenderer = Cadre.GetComponent<SpriteRenderer>();
         if (Image != null) imageRenderer = Image.GetComponent<SpriteRenderer>();
+
+        InitializeCard();
     }
 
-    void Update()
+    private void InitializeCard()
     {
         if (CardDefinition != null)
         {
