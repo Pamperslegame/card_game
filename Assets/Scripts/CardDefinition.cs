@@ -7,8 +7,8 @@ public class CardDefinition : ScriptableObject
     [SerializeField] private int maxHealth;
     [SerializeField] private int damage;
     [SerializeField] private int cost;
-    [SerializeField] private Sprite cardImage;
-    [SerializeField] private Sprite cadreImage;
+    [SerializeField] public Sprite cardImage;
+    [SerializeField] public Sprite cadreImage;
 
     public int Health => health;
     public int MaxHealth => maxHealth;

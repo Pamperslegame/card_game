@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Rules.unity
     guid: 2c02b45d61fe1f144a4bc79aa02c1110
+  - enabled: 1
+    path: Assets/ChoosePlayerNumber.unity
+    guid: eb84d0de21cb21944b7885072c6479e8
   m_configObjects: {}
