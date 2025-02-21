@@ -1,18 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     public string playerName;
     public int playerID;
-    public int health;
-    public int maxHealth;
-    public int xp;
-    public int golds;
-    public int damage;
     public List<Card> hand = new List<Card>();
 
-    [SerializeField] private CharacterProfile characterProfile; 
+    [SerializeField] private CharacterProfile characterProfile;
+    [SerializeField] private SpriteRenderer avatarRenderer;
+
+    [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI xpText;
+    [SerializeField] private TextMeshProUGUI lvlText;
+
+    private int health;
+    private int maxHealth;
+    private int xp;
+    private int golds;
+
+    public int Health => maxHealth;
+    public int MaxHealth => maxHealth;
+    public int Xp => xp;
+    public int Golds => golds;
 
     public void InitializePlayer(string name, int id)
     {
@@ -21,16 +33,22 @@ public class Player : MonoBehaviour
 
         if (characterProfile != null)
         {
+            if (avatarRenderer != null)
+            {
+                avatarRenderer.sprite = characterProfile.Avatar;
+            }
+
             health = characterProfile.BaseHp;
-            maxHealth = characterProfile.BaseHp; 
+            maxHealth = characterProfile.BaseHp;
             xp = characterProfile.BaseXp;
             golds = characterProfile.BaseGolds;
-            damage = characterProfile.BaseDamage;
         }
         else
         {
             Debug.LogError("Aucun CharacterProfile assigné !");
         }
+
+        UpdateUI();
     }
 
     public void AddCardToHand(Card card)
@@ -51,24 +69,46 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         health = Mathf.Max(0, health - damageAmount);
-        DisplayPlayerInfo(); 
+        DisplayPlayerInfo();
+        UpdateUI();
     }
 
     public void Heal(int healAmount)
     {
         health = Mathf.Min(maxHealth, health + healAmount);
-        DisplayPlayerInfo(); 
+        DisplayPlayerInfo();
+        UpdateUI();
     }
 
     public void AddExperience(int xpAmount)
     {
         xp += xpAmount;
-        DisplayPlayerInfo(); 
+        DisplayPlayerInfo();
+        UpdateUI();
     }
 
     public void AddGold(int goldAmount)
     {
         golds += goldAmount;
-        DisplayPlayerInfo(); 
+        DisplayPlayerInfo();
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        if (hpText != null)
+        {
+            hpText.text = $"{health}/{maxHealth}";
+        }
+
+        if (goldText != null)
+        {
+            goldText.text = $"{golds}";
+        }
+
+        if (lvlText != null)
+        {
+            lvlText.text = $"XP: {xp}";
+        }
     }
 }

@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Joueur\SynergieType.cs" />
     <Compile Include="Assets\Scripts\ChoosePlayerManager.cs" />
     <Compile Include="Assets\SceneLoaderPlay.cs" />
+    <Compile Include="Assets\Scripts\Joueur\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\CardInitialisation.cs" />
   </ItemGroup>
   <ItemGroup>

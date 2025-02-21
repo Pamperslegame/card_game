@@ -359,6 +359,7 @@
 "Assets/Scripts/ChoosePlayerManager.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Joueur/CharacterProfile.cs"
+"Assets/Scripts/Joueur/PlayerUI.cs"
 "Assets/Scripts/Joueur/Synergie.cs"
 "Assets/Scripts/Joueur/SynergieType.cs"
 "Assets/Scripts/passiveScript/DamageBonusPassive.cs"
