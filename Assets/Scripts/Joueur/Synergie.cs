@@ -1,57 +1,48 @@
 using UnityEngine;
 
-[System.Serializable]
-public class Synergie
+public class Synergie : ScriptableObject
 {
-    [SerializeField] private SynergieType type;
-    public SynergieType Type => type;
+    [SerializeField] private SynergieType synergieType;
+    [SerializeField] private int effectAmount;
 
-    public Synergie(SynergieType type)
+    public SynergieType SynergieType => synergieType;
+    public int EffectAmount => effectAmount;
+
+    
+    public void ApplySynergyEffect(CardDefinition card)
     {
-        this.type = type;
-    }
-
-    public void AppliquerEffetSynergie(CardDefinition card, int nombreCartesEnJeu, PlayerGame playerGame)
-    {
-        if (nombreCartesEnJeu < 2) return;
-
-        switch (Type)
+        switch (synergieType)
         {
             case SynergieType.Robot:
-                PiocheSupplementaire(playerGame, nombreCartesEnJeu);
-                break;
-            case SynergieType.Araignee:
-                ReductionCout(card, nombreCartesEnJeu);
+                ApplyRobotSynergy(card); 
                 break;
             case SynergieType.Chevalier:
-                BuffDamage(card, nombreCartesEnJeu);
+                ApplyChevalierSynergy(card); 
                 break;
-            case SynergieType.ChevalierDeLaNuit:
-                AppliquerPoison(card, nombreCartesEnJeu);
+            case SynergieType.Nuit:
+                ApplyNuitSynergy(card); 
+                break;
+            case SynergieType.Araignee:
+                ApplyAraigneeSynergy(card); 
                 break;
         }
     }
 
-    private void PiocheSupplementaire(PlayerGame player, int nombreCartes)
+    private void ApplyRobotSynergy(CardDefinition card)
     {
-        if (player.handManager != null)
-        {
-            player.handManager.handSize = nombreCartes == 2 ? 5 : (nombreCartes == 4 ? 6 : player.handManager.handSize);
-        }
     }
 
-    private void BuffDamage(CardDefinition card, int nombreCartes)
+    private void ApplyChevalierSynergy(CardDefinition card)
     {
-        card.ApplyDamageBonus(nombreCartes == 2 ? 1 : (nombreCartes == 4 ? 3 : 0));
+        card.ApplyDamageBonus(effectAmount);
     }
 
-    private void AppliquerPoison(CardDefinition card, int nombreCartes)
+    private void ApplyNuitSynergy(CardDefinition card)
     {
-        Debug.Log($"Effet Chevalier de la Nuit : Poison appliqué avec une intensité de {nombreCartes - 1}.");
     }
 
-    private void ReductionCout(CardDefinition card, int nombreCartes)
+    private void ApplyAraigneeSynergy(CardDefinition card)
     {
-        card.ApplyHealthBonus(nombreCartes == 2 ? 1 : (nombreCartes == 4 ? 2 : 0)); 
+        card.ApplyCostReduction(effectAmount);
     }
 }

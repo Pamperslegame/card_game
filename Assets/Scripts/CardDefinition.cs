@@ -3,7 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewCard", menuName = "Card System/Card")]
 public class CardDefinition : ScriptableObject
 {
-    [SerializeField] private int health;
     [SerializeField] private int maxHealth;
     [SerializeField] private int damage;
     [SerializeField] private int cost;
@@ -12,7 +11,6 @@ public class CardDefinition : ScriptableObject
     [SerializeField] private SynergieType synergieType;
     [SerializeField] private Synergie synergie; 
 
-    public int Health => health;
     public int MaxHealth => maxHealth;
     public int Damage => damage;
     public int Cost => cost;
@@ -21,9 +19,8 @@ public class CardDefinition : ScriptableObject
     public SynergieType SynergieType => synergieType;
     public Synergie Synergie => synergie; 
 
-    public void Initialize(int health, int maxHealth, int damage, int cost, Sprite image, Sprite cadre, Synergie synergie)
+    public void Initialize(int maxHealth, int damage, int cost, Sprite image, Sprite cadre, Synergie synergie)
     {
-        this.health = health;
         this.maxHealth = maxHealth;
         this.damage = damage;
         this.cost = cost;
@@ -44,6 +41,12 @@ public class CardDefinition : ScriptableObject
 
     public void ApplyHealthBonus(int bonusAmount)
     {
-        health += bonusAmount;
+        maxHealth += bonusAmount;
     }
+
+    public void ApplyCostReduction(int reductionAmount)
+    {
+        cost = Mathf.Max(0, cost - reductionAmount);  
+    }
+
 }
