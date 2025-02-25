@@ -8,45 +8,39 @@ public class Synergie : ScriptableObject
     public SynergieType SynergieType => synergieType;
     public int EffectAmount => effectAmount;
 
-    
     public void ApplySynergyEffect(CardDefinition cardDefinition, Card card)
     {
-        switch (synergieType)
+        IPassiveEffect synergyEffect = GetSynergyEffect();
+        if (synergyEffect != null)
         {
-            case SynergieType.Robot:
-                ApplyRobotSynergy(cardDefinition, card); 
-                break;
-            case SynergieType.Chevalier:
-                ApplyChevalierSynergy(cardDefinition, card); 
-                break;
-            case SynergieType.Nuit:
-                ApplyNuitSynergy(cardDefinition, card); 
-                break;
-            case SynergieType.Araignee:
-                ApplyAraigneeSynergy(cardDefinition, card); 
-                break;
+            synergyEffect.Apply(cardDefinition);
         }
     }
 
-    private void ApplyRobotSynergy(CardDefinition cardDefinition, Card card)
+    private IPassiveEffect GetSynergyEffect()
     {
-        Debug.Log("Synergie Robot appliquée !");
+        switch (synergieType)
+        {
+            case SynergieType.Chevalier:
+                return CreateDamageBonusEffect();
+            case SynergieType.Araignee:
+                return CreateCostReductionEffect();
+            default:
+                return null;
+        }
     }
 
-    private void ApplyChevalierSynergy(CardDefinition cardDefinition, Card card)
+    private IPassiveEffect CreateDamageBonusEffect()
     {
-        cardDefinition.ApplyDamageBonus(effectAmount);
-        Debug.Log($"Bonus de dégâts de {effectAmount} appliqué grâce à la synergie Chevalier !");
+        var effect = ScriptableObject.CreateInstance<IncreaseDamagePassive>();
+        effect.Initialize(effectAmount);
+        return effect;
     }
 
-    private void ApplyNuitSynergy(CardDefinition cardDefinition, Card card)
+    private IPassiveEffect CreateCostReductionEffect()
     {
-        Debug.Log("Synergie Nuit appliquée !");
-    }
-
-    private void ApplyAraigneeSynergy(CardDefinition cardDefinition, Card card)
-    {
-        cardDefinition.ApplyCostReduction(effectAmount);
-        Debug.Log($"Réduction de coût de {effectAmount} appliquée grâce à la synergie Araignée !");
+        var effect = ScriptableObject.CreateInstance<ReduceCostPassive>();
+        effect.Initialize(effectAmount);
+        return effect;
     }
 }

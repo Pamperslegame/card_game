@@ -1,21 +1,19 @@
 using UnityEngine;
 
-public class ToggleScrollView : MonoBehaviour
+public class ToggleVisibility : MonoBehaviour
 {
-    public GameObject scrollView;
+    public GameObject targetObject; // Peut être n'importe quel GameObject
 
-    public void ToggleScrollViewVisibility()
+    public void ToggleObjectVisibility()
     {
-        Debug.Log("ToggleScrollViewVisibility appelée !"); // Vérifiez que cette méthode est bien appelée
-
-        if (scrollView != null)
+        if (targetObject != null)
         {
-            Debug.Log("ScrollView trouvée !"); // Vérifiez que la ScrollView est bien assignée
-            scrollView.SetActive(!scrollView.activeSelf);
+            targetObject.SetActive(!targetObject.activeSelf);
+            Debug.Log(targetObject.name + " toggled to " + targetObject.activeSelf);
         }
         else
         {
-            Debug.LogWarning("ScrollView non assignée !");
+            Debug.LogWarning("Aucun objet assigné à 'targetObject' !");
         }
     }
 }

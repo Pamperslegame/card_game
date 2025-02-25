@@ -43,4 +43,11 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Debug.Log("SetOnBoard appelé avec la valeur : " + value);
         isOnBoard = value;
     }
+
+    // Fonction pour gérer le clic
+    public void OnCardClicked()
+    {
+        Debug.Log("La carte a été cliquée !");
+        // Ajoutez ici des actions spécifiques au clic
+    }
 }
