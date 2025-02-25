@@ -21,10 +21,12 @@ public class Player : MonoBehaviour
     private int xp;
     private int golds;
 
-    public int Health => maxHealth;
+    public int Health => health;
     public int MaxHealth => maxHealth;
     public int Xp => xp;
     public int Golds => golds;
+
+    public event System.Action OnStatsChanged;
 
     public void InitializePlayer(string name, int id)
     {
@@ -58,7 +60,14 @@ public class Player : MonoBehaviour
 
     public void PlayCard(Card card)
     {
-        hand.Remove(card);
+        if (hand.Contains(card))
+        {
+            hand.Remove(card);
+        }
+        else
+        {
+            Debug.LogWarning("La carte n'est pas dans la main du joueur !");
+        }
     }
 
     public void DisplayPlayerInfo()
@@ -96,19 +105,33 @@ public class Player : MonoBehaviour
 
     private void UpdateUI()
     {
+        Debug.Log("UpdateUI appelée !");
+
         if (hpText != null)
         {
             hpText.text = $"{health}/{maxHealth}";
+        }
+        else
+        {
+            Debug.LogWarning("hpText non assigné !");
         }
 
         if (goldText != null)
         {
             goldText.text = $"{golds}";
         }
+        else
+        {
+            Debug.LogWarning("goldText non assigné !");
+        }
 
         if (lvlText != null)
         {
             lvlText.text = $"XP: {xp}";
+        }
+        else
+        {
+            Debug.LogWarning("lvlText non assigné !");
         }
     }
 }
