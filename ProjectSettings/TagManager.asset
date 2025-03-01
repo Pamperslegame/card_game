@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Plateau
+    uniqueID: 1841506643
+    locked: 0
+  - name: Cartes
+    uniqueID: 3552655821
+    locked: 0

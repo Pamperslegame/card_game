@@ -5,16 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scene/Rules.unity
+    guid: 5bf13826a8d80404abff66938503db82
+  - enabled: 0
+    path: Assets/Scene/Menu.unity
+    guid: 9ebc3b92a9c26eb4d9554a0502cd3416
   - enabled: 1
-    path: Assets/plateau.unity
-    guid: 0a43b0bd6a2a4584f8d30b72fe00b734
+    path: Assets/Scenes/Rules.unity
+    guid: b4d038797bacb8c4c85d08dd322209dd
   - enabled: 1
-    path: Assets/Main.unity
-    guid: e99829c72137fff47ae5dbdf131898be
+    path: Assets/Scenes/Menu.unity
+    guid: 3727803aafe2e754e801b0b320d93c9b
   - enabled: 1
-    path: Assets/Rules.unity
-    guid: 2c02b45d61fe1f144a4bc79aa02c1110
+    path: Assets/Scenes/ChoosePlayers.unity
+    guid: 09be9a5c7bde5cd46b1fe420bb653dcd
   - enabled: 1
-    path: Assets/ChoosePlayerNumber.unity
-    guid: eb84d0de21cb21944b7885072c6479e8
+    path: Assets/Scenes/ChoosePlayersDetails.unity
+    guid: 338a1c0306268bf4d8f18c850b6ddc0c
+  - enabled: 1
+    path: Assets/Scenes/Plateau.unity
+    guid: c372a8f8bd2aa154c9f4727ef72cb286
   m_configObjects: {}
