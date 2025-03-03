@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI; // Pour utiliser Image
 using TMPro;
+using System.Collections.Generic;
 
 // Ajoutez IPointerClickHandler à la liste des interfaces implémentées
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
@@ -102,6 +103,20 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log($"Clic détecté sur {gameObject.name}, bouton : {eventData.button}");
+
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            HandleLeftClick();
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            HandleRightClick();
+        }
+    }
+
+    public void HandleLeftClick()
+    {
         if (CardDefinition != null)
         {
             if (SelectedCard == null)
@@ -137,20 +152,94 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
+    private void HandleRightClick()
+    {
+        if (IsMouseOverCard()) 
+        {
+            Debug.Log($"Clic droit détecté sur {gameObject.name}");
+            TryPlaceOnBoard();
+        }
+    }
+
+
+    private bool IsMouseOverCard()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        foreach (var result in results)
+        {
+            if (result.gameObject == gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void TryPlaceOnBoard()
+    {
+        BoardManager boardManager = FindObjectOfType<BoardManager>();
+        Character player = FindObjectOfType<Character>();
+
+        if (boardManager == null)
+        {
+            Debug.LogError("BoardManager non trouvé !");
+            return;
+        }
+
+        if (player == null)
+        {
+            Debug.LogError("Character (joueur) non trouvé !");
+            return;
+        }
+
+        Debug.Log($"Joueur Gold : {player.Gold}, Coût de la carte : {CardDefinition.Cost}");
+        Debug.Log($"Peut placer carte ? {boardManager.CanPlaceCard()}");
+
+        if (player.Gold >= CardDefinition.Cost && boardManager.CanPlaceCard())
+        {
+            player.SpendGold(CardDefinition.Cost);
+            boardManager.PlaceCard(this);
+            Debug.Log("✅ Carte placée sur le plateau !");
+        }
+        else
+        {
+            Debug.Log("⛔ Pas assez de gold ou plateau plein !");
+        }
+    }
+
+    private void CheckDeath()
+    {
+        int currentHP = int.Parse(hpText.text);
+        if (currentHP <= 0)
+        {
+            BoardManager boardManager = FindObjectOfType<BoardManager>();
+            if (boardManager != null)
+            {
+                boardManager.RemoveCard(this);
+            }
+        }
+    }
+
     private void Attack(Card targetCard)
     {
-        // Réduire les points de vie de la carte cible
         if (targetCard != null && targetCard.hpText != null)
         {
             int targetHP = int.Parse(targetCard.hpText.text);
-            targetHP -= CardDefinition.Damage; // Appliquer les dégâts
-
-            // S'assurer que les points de vie ne deviennent pas négatifs
+            targetHP -= CardDefinition.Damage;
             targetHP = Mathf.Max(targetHP, 0);
-
-            targetCard.hpText.text = targetHP.ToString(); // Mettre à jour les points de vie
+            targetCard.hpText.text = targetHP.ToString();
 
             Debug.Log($"Carte {gameObject.name} attaque ! Dégâts : {CardDefinition.Damage}, HP de la cible : {targetHP}");
+
+            targetCard.CheckDeath(); 
         }
     }
+
 }
