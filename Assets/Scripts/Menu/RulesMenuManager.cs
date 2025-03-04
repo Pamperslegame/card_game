@@ -5,18 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class RulesMenuManager : MonoBehaviour
 {
-    public Button backButton;      // Le bouton "Retour"
-    public TMP_Text rulesText;     // Le TextMeshPro pour afficher le contenu
+    public Button backButton;
+    public TMP_Text rulesText; 
     public string fileName = "RulesContent.txt";
 
     void Start()
     {
-        // Charger le contenu du fichier .txt depuis le dossier Resources
         TextAsset rulesFile = Resources.Load<TextAsset>(fileName);
 
         if (rulesFile != null)
         {
-            // Afficher le contenu du fichier dans le TextMeshPro
             rulesText.text = rulesFile.text;
         }
         else

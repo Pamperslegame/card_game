@@ -15,13 +15,12 @@ public class Character : MonoBehaviour
     public TextMeshProUGUI lvlText;
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI goldText;
-    public Slider xpSlider; // Barre d'XP
+    public Slider xpSlider;
     public int Level => lvl;
     public int Gold => currentGolds;
 
     private Image avatarsprite;
 
-    // Table des XP requis par niveau
     private int[] xpRequiredPerLevel = { 0, 6, 12, 20 };
 
     private void Start()
@@ -30,7 +29,7 @@ public class Character : MonoBehaviour
         {
             currentHp = characterProfile.BaseHp;
             currentXp = characterProfile.BaseXp;
-            currentGolds = characterProfile.BaseGolds; // ✅ Correction ici
+            currentGolds = characterProfile.BaseGolds;
             lvl = 1;
 
             UpdateXPBar();
@@ -67,7 +66,7 @@ public class Character : MonoBehaviour
     public void SpendGoldForXP()
     {
         Debug.Log(currentGolds.ToString());
-        if (currentGolds >= 2) // Vérifie si le joueur a assez de golds
+        if (currentGolds >= 2)
         {
             currentGolds -= 2;
             GainXp(2);
@@ -92,11 +91,11 @@ public class Character : MonoBehaviour
         {
             currentGolds -= amount;
             UpdateUI();
-            return true; // Dépense réussie
+            return true;
         }
 
         Debug.Log("Pas assez de golds !");
-        return false; // Dépense échouée
+        return false;
     }
 
 
@@ -104,8 +103,8 @@ public class Character : MonoBehaviour
     {
         while (lvl < xpRequiredPerLevel.Length && currentXp >= xpRequiredPerLevel[lvl])
         {
-            currentXp -= xpRequiredPerLevel[lvl]; // Soustrait l'XP requis
-            lvl++; // Monte de niveau
+            currentXp -= xpRequiredPerLevel[lvl];
+            lvl++;
             Debug.Log("Nouveau niveau atteint : " + lvl);
         }
 
@@ -125,7 +124,6 @@ public class Character : MonoBehaviour
     private void Die()
     {
         Debug.Log(characterProfile.CharacterName + " has died!");
-        // Ajouter ici une logique de respawn ou de game over
     }
 
     public string GetCharacterInfo()

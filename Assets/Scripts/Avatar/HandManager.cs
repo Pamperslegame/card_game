@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class HandManager : MonoBehaviour
 {
-    [SerializeField] private Transform handSlots; // Le "Content" de la ScrollView
-    [SerializeField] private CardRoller cardRoller; // Référence au CardRoller
-    [SerializeField] private GameObject cardPrefab; // Prefab de la carte
+    [SerializeField] private Transform handSlots;
+    [SerializeField] private CardRoller cardRoller;
+    [SerializeField] private GameObject cardPrefab;
 
     private List<Card> currentHand = new List<Card>();
 
     void Start()
     {
-        DrawHand(); // Tirer une main au début
+        DrawHand();
     }
 
     public void DrawHand()
@@ -31,7 +31,7 @@ public class HandManager : MonoBehaviour
             newCard.CardDefinition = cardDef;
             newCard.InitializeCard();
 
-            currentHand.Add(newCard); // Stocker la carte en main
+            currentHand.Add(newCard);
         }
     }
 

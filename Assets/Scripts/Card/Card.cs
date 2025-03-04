@@ -4,29 +4,26 @@ using UnityEngine.UI; // Pour utiliser Image
 using TMPro;
 using System.Collections.Generic;
 
-// Ajoutez IPointerClickHandler à la liste des interfaces implémentées
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public CardDefinition CardDefinition;  
-    public GameObject Cadre;                // Cadre de la carte
-    public GameObject Image;                // Image de la carte
+    public GameObject Cadre;
+    public GameObject Image;
 
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI hpText;
 
-    private Image cadreImage;   // UI Image au lieu de SpriteRenderer
-    private Image cardImage;    // UI Image au lieu de SpriteRenderer
+    private Image cadreImage;
+    private Image cardImage;
     private Vector3 startPosition;
     private Transform parentToReturnTo; 
     private bool isOnBoard = false;
 
-    // Ajout pour gérer la sélection des cartes et l'attaque
-    public static Card SelectedCard = null; // Carte actuellement sélectionnée
-    public bool IsSelected = false;  // Si cette carte est sélectionnée
+    public static Card SelectedCard = null;
+    public bool IsSelected = false;
 
     void Start()
     {
-        // Récupérer les composants UI Image
         if (Cadre != null) cadreImage = Cadre.GetComponent<Image>();
         if (Image != null) cardImage = Image.GetComponent<Image>();
 
@@ -42,14 +39,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if (CardDefinition != null)
         {
-            // Modifier les images avec les bons sprites
             if (cadreImage != null)
                 cadreImage.sprite = CardDefinition.CadreImage;
 
             if (cardImage != null)
                 cardImage.sprite = CardDefinition.CardImage;
 
-            // Mettre à jour les valeurs de texte
             if (damageText != null)
                 damageText.text = $"{CardDefinition.Damage}";
 
@@ -129,10 +124,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             {
                 if (SelectedCard != this)
                 {
-                    // Vérifier si les cartes appartiennent à des parents différents
                     if (SelectedCard.transform.parent != this.transform.parent)
                     {
-                        // Lancer l'attaque : appliquer les dégâts
                         Attack(SelectedCard);
                     }
                     else
@@ -140,7 +133,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                         Debug.Log("Les cartes sont dans le même groupe, elles ne peuvent pas s'attaquer.");
                     }
 
-                    // Réinitialiser la sélection après l'attaque
                     SelectedCard = null;
                     IsSelected = false;
                 }
