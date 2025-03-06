@@ -796,6 +796,7 @@ GameObject:
   m_Component:
   - component: {fileID: 153777476}
   - component: {fileID: 153777477}
+  - component: {fileID: 153777478}
   m_Layer: 5
   m_Name: HandManager
   m_TagString: Untagged
@@ -834,9 +835,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08dfd61e53c6e0e40afb6cfe223a9054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &153777478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153777475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404eb9c37abc88649937c20e5779091f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   handSlots: {fileID: 1997356776}
   cardRoller: {fileID: 1908311399}
-  cardPrefab: {fileID: 9135152700045230515, guid: 1330cee3d265b1049a6ee0894efcbbfd, type: 3}
+  cardPrefab: {fileID: 1372863519}
+  boardManager: {fileID: 542620626}
 --- !u!1001 &163134533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5039,7 +5053,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 153777477}
+      - m_Target: {fileID: 153777478}
         m_TargetAssemblyTypeName: HandManager, Assembly-CSharp
         m_MethodName: DrawHand
         m_Mode: 1
@@ -7244,6 +7258,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 1537800783}
+--- !u!1 &1372863519 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9135152700045230515, guid: 1330cee3d265b1049a6ee0894efcbbfd, type: 3}
+  m_PrefabInstance: {fileID: 540442859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1395269432
 GameObject:
   m_ObjectHideFlags: 0
