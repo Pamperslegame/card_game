@@ -29,8 +29,4 @@ public class CardDefinition : ScriptableObject
         this.synergie = synergie;
     }
 
-    public void ApplyPassiveEffect(IPassiveEffect passiveEffect)
-    {
-        passiveEffect?.Apply(this);
-    }
 }

@@ -63,19 +63,19 @@
     <Analyzer Include="C:\Users\Biout\Desktop\UnityDL\2022.3.21f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Plateau\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Avatar\xpBar.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\Avatar\HandManager.cs" />
     <Compile Include="Assets\Scripts\Card\CardSpawner.cs" />
     <Compile Include="Assets\Scripts\Avatar\BoardManager.cs" />
+    <Compile Include="Assets\Scripts\Menu\BackgroundText.cs" />
     <Compile Include="Assets\Scripts\Menu\RulesMenuManager.cs" />
-    <Compile Include="Assets\Scripts\passiveScript\PassiveRarity.cs" />
     <Compile Include="Assets\Scripts\Card\SynergieType.cs" />
     <Compile Include="Assets\Scripts\passiveScript\IPassiveEffect.cs" />
     <Compile Include="Assets\Scripts\Menu\LoadRulesContent.cs" />
     <Compile Include="Assets\Scripts\Avatar\Character.cs" />
     <Compile Include="Assets\Scripts\Card\CardDefinition.cs" />
-    <Compile Include="Assets\Scripts\passiveScript\PassiveEffectManager.cs" />
     <Compile Include="Assets\Scripts\Menu\PlayerNameManager.cs" />
     <Compile Include="Assets\Scripts\Avatar\CharacterProfile.cs" />
     <Compile Include="Assets\Scripts\Plateau\CanvasSeparator.cs" />
@@ -84,11 +84,8 @@
     <Compile Include="Assets\Scripts\Menu\MatchupManager.cs" />
     <Compile Include="Assets\Scripts\Avatar\CardRoller.cs" />
     <Compile Include="Assets\Scripts\Card\Synergie.cs" />
-    <Compile Include="Assets\Scripts\passiveScript\IncreaseHealthPassive.cs" />
-    <Compile Include="Assets\Scripts\passiveScript\IncreaxeDamagePassive.cs" />
     <Compile Include="Assets\Scripts\Menu\ChooseNumberOfPlayers.cs" />
     <Compile Include="Assets\Scripts\Card\Card.cs" />
-    <Compile Include="Assets\Scripts\passiveScript\ReduceCostPassive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

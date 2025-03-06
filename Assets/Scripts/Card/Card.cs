@@ -8,25 +8,32 @@ using System.Collections.Generic;
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public CardDefinition CardDefinition;  
-    public GameObject Cadre;                // Cadre de la carte
-    public GameObject Image;                // Image de la carte
+    public GameObject Cadre;                
+    public GameObject Image;                
 
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI hpText;
 
-    private Image cadreImage;   // UI Image au lieu de SpriteRenderer
-    private Image cardImage;    // UI Image au lieu de SpriteRenderer
+    private Image cadreImage;   
+    private Image cardImage;    
     private Vector3 startPosition;
     private Transform parentToReturnTo; 
     private bool isOnBoard = false;
 
-    // Ajout pour gérer la sélection des cartes et l'attaque
-    public static Card SelectedCard = null; // Carte actuellement sélectionnée
-    public bool IsSelected = false;  // Si cette carte est sélectionnée
+    private int initialDamage;
+    private int initialHealth;
+
+    private bool isReviveActive = false;
+    private bool isBlockActive = false;
+    private bool isDoubleStrikeActive = false;
+
+    private bool isDead = false;
+
+    public static Card SelectedCard = null; 
+    public bool IsSelected = false;  
 
     void Start()
     {
-        // Récupérer les composants UI Image
         if (Cadre != null) cadreImage = Cadre.GetComponent<Image>();
         if (Image != null) cardImage = Image.GetComponent<Image>();
 
@@ -41,36 +48,66 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void InitializeCard()
     {
         if (CardDefinition != null)
-        {
-            // Modifier les images avec les bons sprites
+        {   
+
+            initialDamage = CardDefinition.Damage;
+            initialHealth = CardDefinition.MaxHealth;
+            
             if (cadreImage != null)
                 cadreImage.sprite = CardDefinition.CadreImage;
 
             if (cardImage != null)
                 cardImage.sprite = CardDefinition.CardImage;
 
-            // Mettre à jour les valeurs de texte
             if (damageText != null)
-                damageText.text = $"{CardDefinition.Damage}";
+            {
+                damageText.text = $"{CardDefinition.Damage}"; 
+                Debug.Log($"Dégâts de la carte {gameObject.name} : {damageText.text}");
+            }
 
             if (hpText != null)
                 hpText.text = $"{CardDefinition.MaxHealth}";
 
-            ApplySynergy();
         }
         else
         {
-            Debug.LogWarning("Aucune définition de carte assignée !");
+            Debug.LogWarning("Aucune CardDefinition assignée à la carte.");
         }
     }
 
-    private void ApplySynergy()
+    public void ApplyTemporaryDamageBuff(int bonusDamage)
     {
-        if (CardDefinition.Synergie != null)
+        int newDamage = initialDamage + bonusDamage;
+        if (damageText != null)
         {
-            CardDefinition.Synergie.ApplySynergyEffect(CardDefinition, this);
+            damageText.text = $"{newDamage}"; 
         }
     }
+
+    public void ApplyTemporaryHealthBuff(int bonusHealth)
+    {
+        int newHealth = initialHealth + bonusHealth;
+        if (hpText != null)
+        {
+            hpText.text = $"{newHealth}"; 
+        }
+    }
+
+    public void ResetToInitialDamageStats()
+    {
+        if (damageText != null)
+        {
+            damageText.text = $"{initialDamage}";  
+        }
+    }
+
+    public void ResetToInitialHealthStats() {
+        if (hpText != null) 
+        {
+            hpText.text = $"{initialHealth}";
+        }
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -242,4 +279,59 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
+    public void ActivateRevive(bool isActive)
+    {
+        isReviveActive = isActive;
+    }
+
+    public void ActivateBlock(bool isActive)
+    {
+        isBlockActive = isActive;
+    }
+
+    public void ActivateDoubleStrike(bool isActive)
+    {
+        isDoubleStrikeActive = isActive;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isBlockActive)
+        {
+            Debug.Log($"{name} bloque l'attaque ! Aucun dégât n'est subi.");
+            isBlockActive = false;  
+            return;
+        }
+
+        if (!isDead)
+        {
+            CardDefinition.MaxHealth -= damage;
+            Debug.Log($"{name} subit {damage} dégâts. PV restants : {CardDefinition.MaxHealth}");
+            
+            if (CardDefinition.MaxHealth <= 0)
+            {
+                if (isReviveActive)
+                {
+                    Revive();
+                }
+                else
+                {
+                    Die();
+                }
+            }
+        }
+    }
+
+    private void Revive()
+    {
+        isDead = false;
+        CardDefinition.MaxHealth = 1;  
+        Debug.Log($"{name} revient à la vie avec {CardDefinition.MaxHealth} PV !");
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        Debug.Log($"{name} est morte !");
+    }
 }

@@ -15,11 +15,14 @@ public class Character : MonoBehaviour
     public TextMeshProUGUI lvlText;
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI goldText;
-    public Slider xpSlider; // Barre d'XP
+    public Slider xpSlider; 
     public int Level => lvl;
     public int Gold => currentGolds;
 
     private Image avatarsprite;
+
+    public int GetCurrentHP() => currentHp;
+
 
     // Table des XP requis par niveau
     private int[] xpRequiredPerLevel = { 0, 6, 12, 20 };
@@ -30,7 +33,7 @@ public class Character : MonoBehaviour
         {
             currentHp = characterProfile.BaseHp;
             currentXp = characterProfile.BaseXp;
-            currentGolds = characterProfile.BaseGolds; // ✅ Correction ici
+            currentGolds = characterProfile.BaseGolds; 
             lvl = 1;
 
             UpdateXPBar();
