@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using System;
 
 public class TurnManager : MonoBehaviour
 {
@@ -16,9 +15,14 @@ public class TurnManager : MonoBehaviour
     public Button endTurnButton;
 
     private int[] playerOrder = new int[4];
+    private int[] attackOrder;
+    private int currentAttackerIndex = 0;
+    private bool isCombatPhase = false;
+    private int currentTargetIndex = -1;
+
     public Character[] players;
     public GameObject attackSelectionImage;
-    public Button[] targetButtons; 
+    public Button[] targetButtons;
 
     public event System.Action OnTurnChanged;
 
@@ -57,7 +61,7 @@ public class TurnManager : MonoBehaviour
     {
         for (int i = 0; i < targetButtons.Length; i++)
         {
-            int targetIndex = i; 
+            int targetIndex = i;
             targetButtons[i].onClick.AddListener(() => SelectTarget(targetIndex));
         }
     }
@@ -100,28 +104,32 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn()
     {
-        int playerIndex = playerOrder[CurrentPlayer - 1] - 1;
-        playerTimers[playerIndex].StopTimer();
-
-        Debug.Log("Joueur " + playerOrder[CurrentPlayer - 1] + " a fini son tour.");
-
-        CurrentPlayer++;
-
-        if (CurrentPlayer > 4)
+        if (!isCombatPhase)
         {
-            EndPreparationPhase();
-            CurrentPlayer = 1;
-            CurrentTurn++;
-            Debug.Log("Passage au tour " + CurrentTurn);
-            StartPreparationPhase();
+            int playerIndex = playerOrder[CurrentPlayer - 1] - 1;
+            playerTimers[playerIndex].StopTimer();
+
+            Debug.Log("Joueur " + playerOrder[CurrentPlayer - 1] + " a fini son tour.");
+
+            CurrentPlayer++;
+
+            if (CurrentPlayer > 4)
+            {
+                EndPreparationPhase();
+            }
+            else
+            {
+                StartNextPlayerPreparation();
+            }
+
+            ApplyRandomPassive();
+            OnTurnChanged?.Invoke();
         }
         else
         {
-            StartNextPlayerPreparation();
+            StopAllCoroutines();
+            StartCoroutine(EndAttackPhase());
         }
-
-        ApplyRandomPassive();
-        OnTurnChanged?.Invoke();
     }
 
     private void HandleTurnEnd()
@@ -152,16 +160,30 @@ public class TurnManager : MonoBehaviour
     private void EndPreparationPhase()
     {
         Debug.Log("Phase de préparation terminée !");
+        isCombatPhase = true;
+        SetupCombatOrder();
         StartCombatPhase();
+    }
+
+    private void SetupCombatOrder()
+    {
+        attackOrder = playerOrder.OrderBy(x => UnityEngine.Random.value).ToArray();
+        currentAttackerIndex = 0;
     }
 
     private void StartCombatPhase()
     {
-        Debug.Log("Début de la phase de combat");
-        int attackerIndex = DetermineAttacker();
-        Debug.Log("Joueur " + playerOrder[attackerIndex] + " commence l'attaque.");
+        if (currentAttackerIndex >= attackOrder.Length)
+        {
+            EndCombatPhase();
+            return;
+        }
+
+        int attackerIndex = attackOrder[currentAttackerIndex] - 1;
+        Debug.Log("Joueur " + attackOrder[currentAttackerIndex] + " commence l'attaque.");
 
         attackSelectionImage.SetActive(true);
+        currentTargetIndex = -1;
 
         for (int i = 0; i < targetButtons.Length; i++)
         {
@@ -172,32 +194,58 @@ public class TurnManager : MonoBehaviour
         {
             playerUI[i].SetActive(i == attackerIndex);
         }
-    }
 
-    private int DetermineAttacker()
-    {
-        int[] sortedPlayers = playerOrder.OrderBy(p => GetPlayerStats(p)).ToArray();
-        return Array.IndexOf(playerOrder, sortedPlayers[0]);
-    }
-
-    private int GetPlayerStats(int playerId)
-    {
-        Character player = players[playerId - 1];
-        return player.GetCurrentHP() - player.Gold();
+        // Activation du bouton "Fin de tour"
+        endTurnButton.gameObject.SetActive(true);
     }
 
     public void SelectTarget(int targetPlayerIndex)
     {
-        attackSelectionImage.SetActive(false);
+        if (targetPlayerIndex == attackOrder[currentAttackerIndex] - 1) return;
 
-        Debug.Log("Attaquant: " + (CurrentPlayer - 1) + " cible Joueur: " + targetPlayerIndex);
+        attackSelectionImage.SetActive(false);
+        currentTargetIndex = targetPlayerIndex;
+
+        Debug.Log($"Attaquant: {attackOrder[currentAttackerIndex]}, Cible sélectionnée: {targetPlayerIndex}");
 
         for (int i = 0; i < playerUI.Length; i++)
         {
-            playerUI[i].SetActive(i == (CurrentPlayer - 1) || i == targetPlayerIndex);
+            playerUI[i].SetActive(i == attackOrder[currentAttackerIndex] - 1 || i == targetPlayerIndex);
         }
 
-        playerTimers[CurrentPlayer - 1].StartTimer();
-        playerTimers[targetPlayerIndex].StartTimer();
+        StartCombatTimer();
+    }
+
+    private void StartCombatTimer()
+    {
+        int attackerIndex = attackOrder[currentAttackerIndex] - 1;
+        playerTimers[attackerIndex].StartTimer();
+
+        Debug.Log($"Démarrage du timer pour le joueur {attackOrder[currentAttackerIndex]}");
+    }
+
+    private IEnumerator EndAttackPhase()
+    {
+        yield return new WaitForSeconds(30f);
+
+        int attackerIndex = attackOrder[currentAttackerIndex] - 1;
+        playerTimers[attackerIndex].StopTimer();
+
+        Debug.Log("Attaque terminée, passage au prochain attaquant");
+        currentAttackerIndex++;
+
+        StartCombatPhase();
+    }
+
+    private void EndCombatPhase()
+    {
+        Debug.Log("Phase de combat terminée !");
+        isCombatPhase = false;
+        
+        // Désactivation du bouton "Fin de tour"
+        endTurnButton.gameObject.SetActive(false);
+
+        CurrentTurn++;
+        StartPreparationPhase();
     }
 }
