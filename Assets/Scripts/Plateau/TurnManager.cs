@@ -1,147 +1,203 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class TurnManager : MonoBehaviour
 {
-    public TMP_Text turnText;
+    public static TurnManager Instance { get; private set; }
+
+    public int CurrentTurn { get; private set; } = 1;
+    public int CurrentPlayer { get; private set; } = 1;
+
+    public TurnTimer[] playerTimers;
+    public GameObject[] playerUI;
     public Button endTurnButton;
 
-    public TMP_Text titre;  // Affiche le titre du passif
-    public TMP_Text description;  // Affiche la description du passif
+    private int[] playerOrder = new int[4];
+    public Character[] players;
+    public GameObject attackSelectionImage;
+    public Button[] targetButtons; 
 
-    private int currentTurn = 1;
-    private int currentPlayer = 1;
+    public event System.Action OnTurnChanged;
 
-    private List<PassiveEffect> passives = new List<PassiveEffect>
+    public PassiveEffect ActivePassive { get; private set; }
+
+    private void Awake()
     {
-        new ReviveEffect(),
-        new BlockEffect(),
-        new DoubleStrikeEffect()
-    };
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
-    private PassiveEffect activePassive = null;
-
-    // Références aux 4 joueurs
-    public Character player1;
-    public Character player2;
-    public Character player3;
-    public Character player4;
-
-    void Start()
+    private void Start()
     {
-        if (turnText == null || endTurnButton == null || titre == null || description == null)
+        players = FindObjectsOfType<Character>();
+
+        for (int i = 0; i < playerTimers.Length; i++)
         {
-            Debug.LogError("Références manquantes dans l'inspecteur !");
-            return;
+            playerTimers[i].SetTimerDuration(30f);
+            playerTimers[i].OnTimerEnd += HandleTurnEnd;
         }
 
-        if (player1 == null || player2 == null || player3 == null || player4 == null)
+        foreach (var ui in playerUI)
         {
-            Debug.LogError("Références aux joueurs manquantes !");
-            return;
+            ui.SetActive(false);
         }
 
-        UpdateTurnUI();
         endTurnButton.onClick.AddListener(EndTurn);
+
+        SetupTargetButtons();
+
+        ShufflePlayerOrder();
+        StartPreparationPhase();
+    }
+
+    private void SetupTargetButtons()
+    {
+        for (int i = 0; i < targetButtons.Length; i++)
+        {
+            int targetIndex = i; 
+            targetButtons[i].onClick.AddListener(() => SelectTarget(targetIndex));
+        }
+    }
+
+    private void ShufflePlayerOrder()
+    {
+        playerOrder = Enumerable.Range(1, 4).OrderBy(x => UnityEngine.Random.value).ToArray();
+        Debug.Log("Ordre des joueurs après tirage: " + string.Join(", ", playerOrder));
+    }
+
+    private void StartPreparationPhase()
+    {
+        Debug.Log("Début de la phase de préparation");
+        StartNextPlayerPreparation();
+    }
+
+    private void StartNextPlayerPreparation()
+    {
+        if (CurrentPlayer > 4)
+        {
+            EndPreparationPhase();
+            return;
+        }
+
+        int playerIndex = playerOrder[CurrentPlayer - 1] - 1;
+
+        Debug.Log("Tour " + CurrentTurn + " - Joueur " + playerOrder[CurrentPlayer - 1] + " commence la préparation.");
+
+        playerTimers[playerIndex].StartTimer();
+        playerUI[playerIndex].SetActive(true);
+
+        for (int i = 0; i < playerUI.Length; i++)
+        {
+            if (i != playerIndex)
+            {
+                playerUI[i].SetActive(false);
+            }
+        }
     }
 
     public void EndTurn()
     {
-        currentTurn++;
-        currentPlayer = (currentPlayer % 4) + 1;  // Passer au joueur suivant (de 1 à 4)
+        int playerIndex = playerOrder[CurrentPlayer - 1] - 1;
+        playerTimers[playerIndex].StopTimer();
+
+        Debug.Log("Joueur " + playerOrder[CurrentPlayer - 1] + " a fini son tour.");
+
+        CurrentPlayer++;
+
+        if (CurrentPlayer > 4)
+        {
+            EndPreparationPhase();
+            CurrentPlayer = 1;
+            CurrentTurn++;
+            Debug.Log("Passage au tour " + CurrentTurn);
+            StartPreparationPhase();
+        }
+        else
+        {
+            StartNextPlayerPreparation();
+        }
 
         ApplyRandomPassive();
-        DistributeGolds();  // Distribuer les golds à la fin du tour
-        UpdateTurnUI();
-        Debug.Log($"Tour terminé. Tour actuel: {currentTurn}, Joueur actuel: {currentPlayer}, Passif actif: {activePassive?.Title ?? "Aucun"}");
+        OnTurnChanged?.Invoke();
     }
 
-    void UpdateTurnUI()
+    private void HandleTurnEnd()
     {
-        turnText.text = $"Tour {currentTurn} - Joueur {currentPlayer}";
+        EndTurn();
     }
 
-    void ApplyRandomPassive()
+    private void ApplyRandomPassive()
     {
-        List<PassiveEffect> selectedPassives = new List<PassiveEffect>();
-
-        // Vérifier les 10% de chance pour chaque passif
-        foreach (PassiveEffect passive in passives)
-        {
-            if (Random.value <= 0.1f) 
-            {
-                selectedPassives.Add(passive);
-            }
-        }
-
-        if (selectedPassives.Count > 0)
-        {
-            // S'il y a plusieurs passifs sélectionnés, on en prend un au hasard
-            activePassive = selectedPassives[Random.Range(0, selectedPassives.Count)];
-        }
-        else
-        {
-            activePassive = null;
-        }
-
-        UpdateBoardUI();
-    }
-
-    void UpdateBoardUI()
-    {
-        if (activePassive != null)
-        {
-            titre.text = activePassive.Title;
-            description.text = activePassive.Description;
-        }
-        else
-        {
-            titre.text = "Passif";
-            description.text = "Aucun passif ce tour";
-        }
-    }
-
-    void DistributeGolds()
-    {
-        if (player1 == null || player2 == null || player3 == null || player4 == null) return;
-
-        int player1HP = player1.GetCurrentHP(); 
-        int player2HP = player2.GetCurrentHP();
-        int player3HP = player3.GetCurrentHP();
-        int player4HP = player4.GetCurrentHP();
-
-        List<(Character player, int hp)> players = new List<(Character, int)>
-        {
-            (player1, player1HP),
-            (player2, player2HP),
-            (player3, player3HP),
-            (player4, player4HP)
+        PassiveEffect[] passifs = new PassiveEffect[] {
+            new ReviveEffect(),
+            new BlockEffect(),
+            new DoubleStrikeEffect()
         };
 
-        players = players.OrderByDescending(p => p.hp).ToList();
-
-    
-        if (players[0].hp == players[1].hp && players[1].hp == players[2].hp && players[2].hp == players[3].hp)
+        if (UnityEngine.Random.value <= 0.1f)
         {
-            
-            foreach (var player in players)
-            {
-                player.player.EarnGold(5);
-            }
-            Debug.Log("Égalité totale ! Chaque joueur gagne 5 golds.");
+            ActivePassive = passifs[UnityEngine.Random.Range(0, passifs.Length)];
+            Debug.Log("Passif appliqué : " + ActivePassive.GetType().Name);
         }
         else
         {
-            
-            players[0].player.EarnGold(10); 
-            players[1].player.EarnGold(8);  
-            players[2].player.EarnGold(6);  
-            players[3].player.EarnGold(5);  
-
-            Debug.Log("Golds distribués : Premier : 10, Deuxième : 8, Troisième : 6, Quatrième : 5");
+            ActivePassive = null;
+            Debug.Log("Aucun passif appliqué.");
         }
+    }
+
+    private void EndPreparationPhase()
+    {
+        Debug.Log("Phase de préparation terminée !");
+        StartCombatPhase();
+    }
+
+    private void StartCombatPhase()
+    {
+        Debug.Log("Début de la phase de combat");
+        int attackerIndex = DetermineAttacker();
+        Debug.Log("Joueur " + playerOrder[attackerIndex] + " commence l'attaque.");
+
+        attackSelectionImage.SetActive(true);
+
+        for (int i = 0; i < targetButtons.Length; i++)
+        {
+            targetButtons[i].gameObject.SetActive(i != attackerIndex);
+        }
+
+        for (int i = 0; i < playerUI.Length; i++)
+        {
+            playerUI[i].SetActive(i == attackerIndex);
+        }
+    }
+
+    private int DetermineAttacker()
+    {
+        int[] sortedPlayers = playerOrder.OrderBy(p => GetPlayerStats(p)).ToArray();
+        return Array.IndexOf(playerOrder, sortedPlayers[0]);
+    }
+
+    private int GetPlayerStats(int playerId)
+    {
+        Character player = players[playerId - 1];
+        return player.GetCurrentHP() - player.Gold();
+    }
+
+    public void SelectTarget(int targetPlayerIndex)
+    {
+        attackSelectionImage.SetActive(false);
+
+        Debug.Log("Attaquant: " + (CurrentPlayer - 1) + " cible Joueur: " + targetPlayerIndex);
+
+        for (int i = 0; i < playerUI.Length; i++)
+        {
+            playerUI[i].SetActive(i == (CurrentPlayer - 1) || i == targetPlayerIndex);
+        }
+
+        playerTimers[CurrentPlayer - 1].StartTimer();
+        playerTimers[targetPlayerIndex].StartTimer();
     }
 }

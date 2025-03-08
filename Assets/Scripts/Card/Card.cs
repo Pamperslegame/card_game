@@ -236,10 +236,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
         }
 
-        Debug.Log($"Joueur Gold : {player.Gold}, Coût de la carte : {CardDefinition.Cost}");
+        Debug.Log($"Joueur Gold : {player.Gold()}, Coût de la carte : {CardDefinition.Cost}");
         Debug.Log($"Peut placer carte ? {boardManager.CanPlaceCard()}");
 
-        if (player.Gold >= CardDefinition.Cost && boardManager.CanPlaceCard())
+        if (player.Gold() >= CardDefinition.Cost && boardManager.CanPlaceCard())
         {
             player.SpendGold(CardDefinition.Cost);
             boardManager.PlaceCard(this);

@@ -17,7 +17,7 @@ public class Character : MonoBehaviour
     public TextMeshProUGUI goldText;
     public Slider xpSlider; 
     public int Level => lvl;
-    public int Gold => currentGolds;
+    public int Gold() => currentGolds;
 
     private Image avatarsprite;
 
