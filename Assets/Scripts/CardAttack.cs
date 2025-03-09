@@ -89,6 +89,8 @@ public class CardAttack : MonoBehaviour
             // décrémenter soncompteur
             manager.DecrementationCountCard(enemyPlayerNumber);
         }
+        // Une seule attaque et c'est au tour du joueur suivant
+        manager.EndRound();
     }
 
 

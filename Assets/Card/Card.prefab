@@ -178,12 +178,15 @@ MonoBehaviour:
   Monster: {fileID: 817502242158035014}
   Pv: {fileID: 1207119878607770130}
   dmg: {fileID: 4115638742226322707}
+  ChampLuck: 10
   card:
   - {fileID: 11400000, guid: c2c262d9f2b455048a03788405c5345c, type: 2}
   - {fileID: 11400000, guid: e907ccdb46ed9c34b8e2e3b86dbc9f20, type: 2}
   - {fileID: 11400000, guid: 363673148f60b6c4cbbdb7f5ebe5f31c, type: 2}
   - {fileID: 11400000, guid: b87a5ecb9898e944480f6ab37593e70d, type: 2}
   - {fileID: 11400000, guid: aa7c723d3310e0444b3cfaeeaba2dc30, type: 2}
+  cardsChampions:
+  - {fileID: 11400000, guid: 7a72bdc92330bd744be9fbc411b391e8, type: 2}
 --- !u!114 &1162305940175338735
 MonoBehaviour:
   m_ObjectHideFlags: 0
