@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 257482940}
   - component: {fileID: 257482939}
   m_Layer: 5
-  m_Name: Menu_Gold
+  m_Name: Menu_Event
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Gold 1
+  m_text: 'Event : Rien'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0c0492ac49798bb4fae027f72d2d9309, type: 2}
   m_sharedMaterial: {fileID: -8512623679220200331, guid: 0c0492ac49798bb4fae027f72d2d9309, type: 2}
@@ -4335,6 +4335,7 @@ MonoBehaviour:
   menu_joueur: {fileID: 542871073}
   menu_round: {fileID: 796438538}
   menu_phase: {fileID: 597029955}
+  menu_event: {fileID: 257482939}
   DeckPlayer1: {fileID: 1296826976}
   DeckPlayer2: {fileID: 967894792}
   DeckPlayer3: {fileID: 161989798}

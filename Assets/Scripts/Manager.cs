@@ -7,7 +7,7 @@ public class Manager : MonoBehaviour
     #region Variable    
     [SerializeField] private GameObject cards, Player1, Player2, Player3, Player4;
 
-    [SerializeField] private TMP_Text menu_joueur, menu_round, menu_phase;
+    [SerializeField] private TMP_Text menu_joueur, menu_round, menu_phase,menu_event;
 
     [SerializeField] private GameObject DeckPlayer1, DeckPlayer2, DeckPlayer3, DeckPlayer4;
 
@@ -112,6 +112,10 @@ public class Manager : MonoBehaviour
 
     }
 
+    public void DisplayEvent(string Event)
+    {
+        menu_event.text = Event;
+    }
 
 
     // fin d'un round 2 phases attack et préparation

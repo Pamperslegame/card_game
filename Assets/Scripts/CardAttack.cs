@@ -61,38 +61,74 @@ public class CardAttack : MonoBehaviour
     void Attack(CardAttack Attaquant, CardAttack Enemie)
     {
 
+        int rdmRevive = Random.Range(0, 100);
+        int rdmAbsorbe = Random.Range(0, 100);
+        int rdmRetentless = Random.Range(0, 100);
+
+        int luckPassive = 5;
+
         // je récupère les stats des joueurs
         TMPro.TextMeshProUGUI[] enemiePlayerStats = Enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI[] attaquantPlayerStats = Attaquant.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
 
-        // je fais la soustraction 
+
+        // je fais la soustraction x2 si y'a retentless
         int enemyHP = int.Parse(enemiePlayerStats[1].text);
         int attackerDamage = int.Parse(attaquantPlayerStats[0].text);
 
-        enemyHP -= attackerDamage;
+        if (rdmRetentless < luckPassive)
+        {
+            enemyHP -= attackerDamage * 2;
+            manager.DisplayEvent("Retentless !");
+        }
+        else if (rdmAbsorbe < luckPassive) manager.DisplayEvent("Absorbe !");
+        else enemyHP -= attackerDamage;
 
+        // set le nouveau hp sur l'attaqué
         enemiePlayerStats[1].text = enemyHP.ToString();
 
         // si hp <= 0 je supprime la carte et je décrémente le countcard de l'énemie ainsi que les modifs de gold
         if (enemyHP <= 0)
         {
-            int enemyPlayerNumber = GetPlayerNumber(Enemie.transform.parent.name);
+            if (rdmRevive < luckPassive)
+            {
+                enemiePlayerStats[1].text = "50"; 
+                manager.DisplayEvent("Revive !");
+            }
+            else
+            {
+                int enemyPlayerNumber = GetPlayerNumber(Enemie.transform.parent.name);
+                Destroy(Enemie.gameObject);
 
-            Destroy(Enemie.gameObject);
+                // retirer gold au joueur attaqué
+                manager.AddGold(-5, enemyPlayerNumber);
 
-            // retirer gold au joueur attaqué
-            manager.AddGold(-5, enemyPlayerNumber);
+                // ajouter gold au joueur qui a attaaqué
+                manager.AddGold(5, manager.currentPlayer);
 
-            // ajouter gold au joueur qui a attaaqué
-            manager.AddGold(5, manager.currentPlayer);
-            
-            // décrémenter soncompteur
-            manager.DecrementationCountCard(enemyPlayerNumber);
+                // décrémenter soncompteur
+                manager.DecrementationCountCard(enemyPlayerNumber);
+            }
         }
         // Une seule attaque et c'est au tour du joueur suivant
-        manager.EndRound();
+            manager.DisplayEvent("");
+            manager.EndRound();
     }
 
+    public void Revive()
+    {
+        
+    }
+
+    public void Absorbe()
+    {
+
+    }
+
+    public void Retentless()
+    {
+
+    }
 
     int GetPlayerNumber(string playerName)
     {
