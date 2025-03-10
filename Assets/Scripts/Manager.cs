@@ -15,6 +15,7 @@ public class Manager : MonoBehaviour
 
     [SerializeField] private GameObject backMenuButton;
 
+
     private TMP_Text Player1Name, Player2Name, Player3Name, Player4Name;
 
     public int currentPlayer = 1, currentPhase = 1,currentRound = 1;
@@ -26,9 +27,24 @@ public class Manager : MonoBehaviour
     private TMP_Text Player1Gold, Player2Gold, Player3Gold, Player4Gold;
 
     public bool[] PlayerInGame = { true, true, true, true };
+
     public bool FinishGame = false;
+
+    public AudioClip[] attackSounds;
     #endregion
 
+
+    // Jouer un son d'attaque aléatoire
+    private AudioSource audioSource;
+    public void PlayRandomAttackSound()
+    {
+        if (attackSounds.Length > 0 && audioSource != null)
+        {
+            int randomIndex = Random.Range(0, attackSounds.Length);
+            audioSource.volume = 0.2f;
+            audioSource.PlayOneShot(attackSounds[randomIndex]);
+        }
+    }
 
     public void BackMenu()
     {
@@ -74,6 +90,7 @@ public class Manager : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         PlayerInit();
         RoundInit();
         backMenuButton.SetActive(false);
@@ -301,6 +318,7 @@ public class Manager : MonoBehaviour
     }
 
 
+
     // fin d'un round 2 phases attack et préparation
     public void EndRound() {
 
@@ -381,5 +399,4 @@ public class Manager : MonoBehaviour
             }
         }
     }
-
 }

@@ -64,6 +64,7 @@
     <Compile Include="Assets\Card\Card.cs" />
     <Compile Include="Assets\Scripts\Manager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Card\CardStats.cs" />
     <Compile Include="Assets\Scripts\CardAttack.cs" />
   </ItemGroup>

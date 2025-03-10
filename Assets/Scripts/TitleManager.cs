@@ -22,6 +22,15 @@ public class TitleManager : MonoBehaviour
         menuRules.SetActive(true);
     }
 
+    public void BP_Exit()
+    {
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #else
+            Application.Quit();
+    #endif
+        }
+
     public void Rules_return()
     {
         menu.SetActive(true);

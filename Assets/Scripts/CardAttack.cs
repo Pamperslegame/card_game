@@ -11,15 +11,18 @@ public class CardAttack : MonoBehaviour
     [SerializeField] private string joueurTag;
     [SerializeField] private Manager manager;
 
+
     private void Awake()
     {
         manager = GameObject.Find("Manager").GetComponent<Manager>();
     }
     public void OnClick()
     {
+
         if (manager.currentPhase == 2)
         {
-            string namePlayer = GetPlayerName(manager.currentPlayer);
+
+                string namePlayer = GetPlayerName(manager.currentPlayer);
             Transform playerDeck = GameObject.FindWithTag(namePlayer).transform;
 
             bool isMyCard = transform.IsChildOf(playerDeck);
@@ -46,20 +49,20 @@ public class CardAttack : MonoBehaviour
     // pour avoir nom du joueur (qui est aussi le tag)
     public string GetPlayerName(int currentPlayer)
     {
-        switch (currentPlayer)
-        {
-            case 1: return "Joueur1";
-            case 2: return "Joueur2";
-            case 3: return "Joueur3";
-            case 4: return "Joueur4";
-            default: return "";
-        }
+        // Vérifie que le joueur est toujours actif
+        if (currentPlayer < 1 || currentPlayer > 4 || !manager.PlayerInGame[currentPlayer - 1])
+            return "Invalid";
+
+        return $"Joueur{currentPlayer}";
     }
 
     // attaquer un joueur
     void Attack(CardAttack Attaquant, CardAttack Enemie)
     {
-
+        if (Random.Range(1,10) > 5)
+        {
+            manager.PlayRandomAttackSound();
+        }
         int rdmRevive = Random.Range(0, 100);
         int rdmAbsorbe = Random.Range(0, 100);
         int rdmRetentless = Random.Range(0, 100);

@@ -375,6 +375,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Card/Card.cs"
 "Assets/Card/CardStats.cs"
+"Assets/Scripts/AudioManager.cs"
 "Assets/Scripts/CardAttack.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Manager.cs"

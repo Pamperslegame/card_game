@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AudioManager
     - Card
     - CardAttack
     - CardStats
@@ -66,7 +67,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
     - UnityEngine.UI.LayoutElement
-    - UnityEngine.UI.RawImage
     - UnityEngine.UI.RectMask2D
   serializedClasses:
     Unity.TextMeshPro:
@@ -111,32 +111,50 @@ ScriptsOnlyBuild:
     fullTypeName: TitleManager
     methodName: Rules_return
   - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
     fullTypeName: TitleManager
     methodName: BP_Rules
+  - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
   - assembly: Assembly-CSharp
     fullTypeName: TitleManager
     methodName: BP_Launch
   - assembly: Assembly-CSharp
-    fullTypeName: TitleManager
-    methodName: Bp_ChooseNumberPlayers
+    fullTypeName: AudioManager
+    methodName: PlayBackgroundMusic
   - assembly: Assembly-CSharp
     fullTypeName: TitleManager
     methodName: Bp_ChooseNumberPlayers
+  - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
+    fullTypeName: TitleManager
+    methodName: Bp_ChooseNumberPlayers
+  - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
   - assembly: Assembly-CSharp
     fullTypeName: TitleManager
     methodName: BP_Start
   - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
     fullTypeName: TitleManager
     methodName: Start_return
   - assembly: Assembly-CSharp
-    fullTypeName: CardAttack
-    methodName: OnClick
-  - assembly: Assembly-CSharp
-    fullTypeName: CardAttack
-    methodName: OnClick
-  - assembly: Assembly-CSharp
-    fullTypeName: CardAttack
-    methodName: OnClick
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
   - assembly: Assembly-CSharp
     fullTypeName: CardAttack
     methodName: OnClick
@@ -180,11 +198,23 @@ ScriptsOnlyBuild:
     fullTypeName: Manager
     methodName: EndRound
   - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
     fullTypeName: Manager
     methodName: BP_Forfate
   - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
+    fullTypeName: Manager
+    methodName: BackMenu
+  - assembly: Assembly-CSharp
     fullTypeName: Manager
     methodName: pioche
+  - assembly: Assembly-CSharp
+    fullTypeName: AudioManager
+    methodName: PlayButtonClickSound
   sceneClasses:
     Assets/Scenes/GameScene.unity:
     - Class: 1
@@ -201,6 +231,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
@@ -209,8 +243,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 1814}
     - Class: 114
       Script: {instanceID: 1954}
-    - Class: 114
-      Script: {instanceID: 2718}
     - Class: 114
       Script: {instanceID: 3096}
     - Class: 114
@@ -237,6 +269,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 8664}
     - Class: 114
       Script: {instanceID: 25646}
+    - Class: 114
+      Script: {instanceID: 68942}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -271,6 +305,10 @@ ScriptsOnlyBuild:
     - Class: 49
       Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -308,6 +346,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 25646}
     - Class: 114
       Script: {instanceID: 25648}
+    - Class: 114
+      Script: {instanceID: 68942}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -315,8 +355,6 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 212
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -629,7 +667,7 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
-      Hash: d4e81fcc2643d2a6d8de6bab2b913fb3
+      Hash: b5d7fb061ee32c20155cac0fa78224ca
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: Manager
@@ -1341,6 +1379,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 935d9926ed1ff06ca59a7044d2ce412e
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: AudioManager
   platform: 19
   scenePathNames:
   - Assets/Scenes/Menu.unity
