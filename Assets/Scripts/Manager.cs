@@ -22,14 +22,33 @@ public class Manager : MonoBehaviour
 
     private TMP_Text Player1Gold, Player2Gold, Player3Gold, Player4Gold;
 
-    public bool[] PlayerInGame = { true, true, true, false };
-
+    public bool[] PlayerInGame = { true, true, true, true };
+    public bool FinishGame = false;
     #endregion
 
     // le jeu est terminé et j'affiche le gagnant
-    public void AffichageGagnant(int gagnant)
+    public void AffichageGagnant()
     {
-        Debug.Log(gagnant);
+        FinishGame = true;
+        Destroy(menu_round);
+        Destroy(menu_phase);
+        Destroy(menu_joueur);
+        Destroy(DeckPlayer1);
+        Destroy(DeckPlayer2);
+        Destroy(DeckPlayer3);
+        Destroy(DeckPlayer4);
+
+        menu_event.text = "Partie terminée !";
+        Player1Gold.text = "";
+        Player2Gold.text = "";
+        Player3Gold.text = "";
+        Player4Gold.text = "";
+
+        if (PlayerInGame[0] == true) Player1Name.text = "Winner !"; else Player1Name.text = "Looser skill issue!";
+        if (PlayerInGame[1] == true) Player2Name.text = "Winner !"; else Player2Name.text = "Looser skill issue!";
+        if (PlayerInGame[2] == true && GameManager.joueurs == 3) Player3Name.text = "Winner !"; else Player3Name.text = "Looser skill issue!";
+        if (PlayerInGame[3] == true && GameManager.joueurs == 4) Player4Name.text = "Winner !"; else Player4Name.text = "Looser skill issue!";
+
     }
 
     void Start()
@@ -41,10 +60,13 @@ public class Manager : MonoBehaviour
     private void Update()
     {
 
-        MajDisplayPlayers();
-        MajGold();
+        if (!FinishGame)
+        {
+            CheckGagnantEtPerdant();
+            MajDisplayPlayers();
+            MajGold();
+        }
 
-        CheckGagnantEtPerdant();
     }
 
     // bouton pour forfate un joueur
@@ -92,38 +114,75 @@ public class Manager : MonoBehaviour
 
 
 
-    // si y'a qu'un seul joueur ça va return un indice
-    public int GetLastPlayerIndex()
+    public bool Check1True()
     {
-        int lastIndex = 0;
-        int count = 0;
+        if (PlayerInGame[0] && !PlayerInGame[1] && !PlayerInGame[2] && !PlayerInGame[3]) return true;
+        else if (!PlayerInGame[0] && PlayerInGame[1] && !PlayerInGame[2] && !PlayerInGame[3]) return true; 
+        else if (!PlayerInGame[0] && !PlayerInGame[1] && PlayerInGame[2] && !PlayerInGame[3]) return true;
+        else if (!PlayerInGame[0] && !PlayerInGame[1] && !PlayerInGame[2] && PlayerInGame[3]) return true;
+        else return false;
+    }
+
+
+
+    public void CheckGagnantEtPerdant()
+    {
+        if (Check1True())
+        {
+            AffichageGagnant();
+            return;
+        }
+
+        int goldMax = 500;
+        bool goldWinnerFound = false;
+
+        if (GoldJoueur1 > goldMax)
+        {
+            PlayerInGame = new bool[] { true, false, false, false };
+            goldWinnerFound = true;
+        }
+        if (GoldJoueur2 > goldMax)
+        {
+            PlayerInGame = new bool[] { false, true, false, false };
+            goldWinnerFound = true;
+        }
+        if (GoldJoueur3 > goldMax)
+        {
+            PlayerInGame = new bool[] { false, false, true, false };
+            goldWinnerFound = true;
+        }
+        if (GoldJoueur4 > goldMax)
+        {
+            PlayerInGame = new bool[] { false, false, false, true };
+            goldWinnerFound = true;
+        }
+
+        if (goldWinnerFound)
+        {
+            AffichageGagnant();
+            return;
+        }
+
+        int countActifs = 0;
+        int indexGagnant = -1;
 
         for (int i = 0; i < PlayerInGame.Length; i++)
         {
             if (PlayerInGame[i])
             {
-                count++;
-                lastIndex = i + 1;
+                countActifs++;
+                indexGagnant = i;
             }
         }
 
-        return (count == 1) ? lastIndex : 0;
+        if (countActifs == 1)
+        {
+            PlayerInGame = new bool[4];
+            PlayerInGame[indexGagnant] = true;
+
+            AffichageGagnant();
+        }
     }
-
-    // check si ya gagnant et afficher qui a gagné avec bouton retour
-    public void CheckGagnantEtPerdant()
-    {
-        // si y'a plus qu'un seul gars
-        int gagnant = GetLastPlayerIndex();
-        if (gagnant != 0) AffichageGagnant(GetLastPlayerIndex());
-
-        // Si un gars a dépassé 1k gold gg a lui
-        if (GoldJoueur1 > 1000) AffichageGagnant(1);
-        if (GoldJoueur2 > 1000) AffichageGagnant(2);
-        if (GoldJoueur3 > 1000) AffichageGagnant(3);
-        if (GoldJoueur4 > 1000) AffichageGagnant(4);
-    }
-
     public void Awake()
     {
 
@@ -144,6 +203,12 @@ public class Manager : MonoBehaviour
     // initialiser les canva des joueurs
     public void PlayerInit()
     {
+        PlayerInGame = new bool[4];
+        for (int i = 0; i < 4; i++)
+        {
+            PlayerInGame[i] = (i < GameManager.joueurs);
+        }
+
         if (GameManager.joueurs == 3)
         {
             Player3.SetActive(true);
@@ -217,6 +282,8 @@ public class Manager : MonoBehaviour
     // fin d'un round 2 phases attack et préparation
     public void EndRound() {
 
+        CheckGagnantEtPerdant();
+
         string[] joueurName = { Player1Name.text, Player2Name.text, Player3Name.text, Player4Name.text };
         int[] joueurGold = { GoldJoueur1, GoldJoueur2, GoldJoueur3, GoldJoueur4 };
 
@@ -253,6 +320,7 @@ public class Manager : MonoBehaviour
                 AddGold(DeckPlayer1.transform.childCount * 10, 1); AddGold(DeckPlayer2.transform.childCount * 10, 2); AddGold(DeckPlayer3.transform.childCount * 10, 3); AddGold(DeckPlayer4.transform.childCount * 10, 4);
             }
         }
+        CheckGagnantEtPerdant();
     }
 
 
