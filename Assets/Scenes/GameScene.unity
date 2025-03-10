@@ -671,8 +671,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -73.00003, y: -38}
-  m_SizeDelta: {x: 526.78, y: 50}
+  m_AnchoredPosition: {x: 1.0939026, y: -55.240005}
+  m_SizeDelta: {x: 674.97, y: 84.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &257482939
 MonoBehaviour:
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Event : Rien'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0c0492ac49798bb4fae027f72d2d9309, type: 2}
   m_sharedMaterial: {fileID: -8512623679220200331, guid: 0c0492ac49798bb4fae027f72d2d9309, type: 2}
@@ -703,8 +703,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280821977
+  m_fontColor: {r: 0.8490566, g: 0.15619439, b: 0.15619439, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -721,14 +721,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1344,7 +1344,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 446621117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1673089870}
+        m_TargetAssemblyTypeName: Manager, Assembly-CSharp
+        m_MethodName: BP_Forfate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &446621117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1695,7 +1707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0022277832, y: 164.39}
+  m_AnchoredPosition: {x: 1.0939026, y: 164.39}
   m_SizeDelta: {x: 677.16, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &542871073
@@ -4343,6 +4355,7 @@ MonoBehaviour:
   currentPlayer: 1
   currentPhase: 1
   currentRound: 1
+  PlayerInGame: 01010101
 --- !u!1 &1735225754
 GameObject:
   m_ObjectHideFlags: 0

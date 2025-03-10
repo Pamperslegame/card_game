@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,6 +48,8 @@ public class TitleManager : MonoBehaviour
         if (joueurs > 2 && symbole == "-") joueurs--;
         nombresJoueurs.text = joueurs.ToString();
     }
+
+
 
 
     public void Update()

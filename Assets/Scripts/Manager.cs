@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 
@@ -15,11 +16,14 @@ public class Manager : MonoBehaviour
 
     public int currentPlayer = 1, currentPhase = 1,currentRound = 1;
 
-    private int GoldJoueur1 = 30, GoldJoueur2 = 30, GoldJoueur3= 30, GoldJoueur4 = 30;
+    private int GoldJoueur1 = 50, GoldJoueur2 = 50, GoldJoueur3= 50, GoldJoueur4 = 50;
     
     private int joueur1Card = 3, joueur2Card = 3, joueur3Card = 3, joueur4Card = 3;
 
     private TMP_Text Player1Gold, Player2Gold, Player3Gold, Player4Gold;
+
+    public bool[] PlayerInGame = { true, true, true, false };
+
     #endregion
 
     void Start()
@@ -28,10 +32,24 @@ public class Manager : MonoBehaviour
         RoundInit();
     }
 
+    private void Update()
+    {
+
+        MajDisplayPlayers();
+        MajGold();
+
+        CheckGagnantEtPerdant();
+    }
+
+    public void BP_Forfate()
+    {
+        PlayerInGame[currentPlayer-1] = false;
+        EndRound();
+    }
+
     // Décrémentation du nbre de carte après en avoir perdu une
     public void DecrementationCountCard(int currentPlayer)
     {
-        Debug.Log($"{joueur1Card}{joueur2Card}{joueur3Card}{joueur4Card}");
         switch (currentPlayer)
         {
 
@@ -40,16 +58,16 @@ public class Manager : MonoBehaviour
             case 3: joueur3Card--; break;
             case 4: joueur4Card--; break;
         }
-        Debug.Log($"{joueur1Card}{joueur2Card}{joueur3Card}{joueur4Card}");
     }
 
     // maj gold sur plateau
     public void MajGold()
     {
-        Player1Gold.text = "Gold :" + GoldJoueur1.ToString();
-        Player2Gold.text = "Gold :" + GoldJoueur2.ToString();
-        Player3Gold.text = "Gold :" + GoldJoueur3.ToString();
-        Player4Gold.text = "Gold :" + GoldJoueur4.ToString();
+
+        if (PlayerInGame[0]) Player1Gold.text = "Gold :" + GoldJoueur1.ToString();
+        if (PlayerInGame[1]) Player2Gold.text = "Gold :" + GoldJoueur2.ToString();
+        if (PlayerInGame[2]) Player3Gold.text = "Gold :" + GoldJoueur3.ToString();
+        if (PlayerInGame[3]) Player4Gold.text = "Gold :" + GoldJoueur4.ToString();
     }
 
     // add gold a un joueur
@@ -57,15 +75,26 @@ public class Manager : MonoBehaviour
     {
         switch (currentPlayer)
         {
-
             case 1: GoldJoueur1+= GoldLost; break;
             case 2: GoldJoueur2 += GoldLost; break;
             case 3: GoldJoueur3 += GoldLost; break;
             case 4: GoldJoueur4 += GoldLost; break;
         }
 
-        MajGold();
+    }
 
+    public void AffichageGagnant(int gagnant)
+    {
+        Debug.Log(gagnant);
+    }
+
+    // check si ya gagnant et afficher qui a gagné avec bouton retour
+    public void CheckGagnantEtPerdant()
+    {
+        if (GoldJoueur1 > 1000) AffichageGagnant(1);
+        if (GoldJoueur2 > 1000) AffichageGagnant(2);
+        if (GoldJoueur3 > 1000) AffichageGagnant(3);
+        if (GoldJoueur4 > 1000) AffichageGagnant(4);
     }
 
     public void Awake()
@@ -103,6 +132,37 @@ public class Manager : MonoBehaviour
         }
     }
 
+
+    // mettre a jour l'UI si forfate ou alors 
+    public void MajDisplayPlayers()
+    {
+            if (!PlayerInGame[0])
+            {
+                DeckPlayer1.SetActive(false);
+                Player1Gold.text = "Hors Jeu";
+
+            }
+            if (!PlayerInGame[1])
+            {
+                DeckPlayer2.SetActive(false);
+                Player2Gold.text = "Hors Jeu";
+
+            }
+            if (!PlayerInGame[2])
+            {
+                DeckPlayer3.SetActive(false);
+                Player3Gold.text = "Hors Jeu";
+
+            }
+            if (!PlayerInGame[3])
+            {
+                DeckPlayer4.SetActive(false);
+                Player4Gold.text = "Hors Jeu";
+
+            }
+    }
+
+
     // initilaiser rounds :
     public void RoundInit()
     {
@@ -112,9 +172,10 @@ public class Manager : MonoBehaviour
 
     }
 
+
     public void DisplayEvent(string Event)
     {
-        menu_event.text = Event;
+        menu_event.text = Event.ToString();
     }
 
 
@@ -124,7 +185,12 @@ public class Manager : MonoBehaviour
         string[] joueurName = { Player1Name.text, Player2Name.text, Player3Name.text, Player4Name.text };
         int[] joueurGold = { GoldJoueur1, GoldJoueur2, GoldJoueur3, GoldJoueur4 };
 
-        currentPlayer = (currentPlayer % GameManager.joueurs) + 1;
+        // verif de si le joueur a abandonné ou alors a perdu
+        do
+        {
+            currentPlayer = (currentPlayer % GameManager.joueurs) + 1;
+        } while (!PlayerInGame[currentPlayer - 1]);
+
 
         menu_joueur.text = joueurName[currentPlayer - 1].ToString();
 
@@ -132,6 +198,7 @@ public class Manager : MonoBehaviour
         if (currentPlayer == 1 && currentPhase == 1)
         {
             currentPhase++;
+            menu_event.text = "";
             menu_phase.text = "Phase : Attack";
 
         }
@@ -140,12 +207,15 @@ public class Manager : MonoBehaviour
         {
             currentPhase--;
             currentRound += 1;
+            menu_event.text = "";
             menu_phase.text = "Phase : Preparation";
             menu_round.text = "Round :" + currentRound.ToString();
 
-            AddGold(10,1); AddGold(10, 2); AddGold(10, 3); AddGold(10, 4);
-
-            MajGold();
+            // DeckPlayer1.transform.childCount on rajoute le nombre de carte fois le nombre de gold (event) 50 % de chance
+            if (Random.Range(0, 100) > 50)
+            {
+                AddGold(DeckPlayer1.transform.childCount * 10, 1); AddGold(DeckPlayer2.transform.childCount * 10, 2); AddGold(DeckPlayer3.transform.childCount * 10, 3); AddGold(DeckPlayer4.transform.childCount * 10, 4);
+            }
         }
     }
 
@@ -159,7 +229,6 @@ public class Manager : MonoBehaviour
             {
                 AddGold(-10, 1);
                 joueur1Card += 1;
-
 
                 Instantiate(cards, DeckPlayer1.transform.position, Quaternion.identity, DeckPlayer1.transform);
             }
@@ -185,7 +254,6 @@ public class Manager : MonoBehaviour
                 Instantiate(cards, DeckPlayer4.transform.position, Quaternion.identity, DeckPlayer4.transform);
             }
         }
-        MajGold();
     }
 
 }

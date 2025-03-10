@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -65,7 +64,7 @@ public class CardAttack : MonoBehaviour
         int rdmAbsorbe = Random.Range(0, 100);
         int rdmRetentless = Random.Range(0, 100);
 
-        int luckPassive = 5;
+        int luckPassive = 15;
 
         // je récupère les stats des joueurs
         TMPro.TextMeshProUGUI[] enemiePlayerStats = Enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
@@ -80,8 +79,13 @@ public class CardAttack : MonoBehaviour
         {
             enemyHP -= attackerDamage * 2;
             manager.DisplayEvent("Retentless !");
+            Debug.Log("event retentless");
         }
-        else if (rdmAbsorbe < luckPassive) manager.DisplayEvent("Absorbe !");
+        else if (rdmAbsorbe < luckPassive)
+        {
+            manager.DisplayEvent("Absorbe !");
+            Debug.Log("event absorbe");
+        }
         else enemyHP -= attackerDamage;
 
         // set le nouveau hp sur l'attaqué
@@ -111,23 +115,7 @@ public class CardAttack : MonoBehaviour
             }
         }
         // Une seule attaque et c'est au tour du joueur suivant
-            manager.DisplayEvent("");
             manager.EndRound();
-    }
-
-    public void Revive()
-    {
-        
-    }
-
-    public void Absorbe()
-    {
-
-    }
-
-    public void Retentless()
-    {
-
     }
 
     int GetPlayerNumber(string playerName)
