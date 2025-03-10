@@ -117,8 +117,8 @@ ScriptsOnlyBuild:
     fullTypeName: AudioManager
     methodName: PlayButtonClickSound
   - assembly: Assembly-CSharp
-    fullTypeName: AudioManager
-    methodName: PlayButtonClickSound
+    fullTypeName: TitleManager
+    methodName: BP_Exit
   - assembly: Assembly-CSharp
     fullTypeName: TitleManager
     methodName: BP_Rules
@@ -192,9 +192,6 @@ ScriptsOnlyBuild:
     fullTypeName: CardAttack
     methodName: OnClick
   - assembly: Assembly-CSharp
-    fullTypeName: CardAttack
-    methodName: OnClick
-  - assembly: Assembly-CSharp
     fullTypeName: Manager
     methodName: EndRound
   - assembly: Assembly-CSharp
@@ -215,6 +212,9 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: AudioManager
     methodName: PlayButtonClickSound
+  - assembly: Assembly-CSharp
+    fullTypeName: CardAttack
+    methodName: OnClick
   sceneClasses:
     Assets/Scenes/GameScene.unity:
     - Class: 1
@@ -252,25 +252,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3934}
     - Class: 114
-      Script: {instanceID: 5806}
+      Script: {instanceID: 4444}
     - Class: 114
-      Script: {instanceID: 6236}
+      Script: {instanceID: 5808}
     - Class: 114
-      Script: {instanceID: 7164}
+      Script: {instanceID: 6238}
     - Class: 114
-      Script: {instanceID: 7430}
+      Script: {instanceID: 7166}
     - Class: 114
-      Script: {instanceID: 7582}
+      Script: {instanceID: 7432}
     - Class: 114
-      Script: {instanceID: 7736}
+      Script: {instanceID: 7584}
     - Class: 114
-      Script: {instanceID: 8478}
+      Script: {instanceID: 7738}
     - Class: 114
-      Script: {instanceID: 8664}
+      Script: {instanceID: 8480}
     - Class: 114
-      Script: {instanceID: 25646}
+      Script: {instanceID: 8666}
     - Class: 114
-      Script: {instanceID: 68942}
+      Script: {instanceID: 25668}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -327,27 +327,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3722}
     - Class: 114
-      Script: {instanceID: 4970}
+      Script: {instanceID: 4444}
     - Class: 114
-      Script: {instanceID: 4992}
+      Script: {instanceID: 4972}
     - Class: 114
-      Script: {instanceID: 5312}
+      Script: {instanceID: 4994}
     - Class: 114
-      Script: {instanceID: 5988}
+      Script: {instanceID: 5314}
     - Class: 114
-      Script: {instanceID: 6236}
+      Script: {instanceID: 5990}
     - Class: 114
-      Script: {instanceID: 7164}
+      Script: {instanceID: 6238}
     - Class: 114
-      Script: {instanceID: 7582}
+      Script: {instanceID: 7166}
     - Class: 114
-      Script: {instanceID: 8212}
+      Script: {instanceID: 7584}
     - Class: 114
-      Script: {instanceID: 25646}
+      Script: {instanceID: 8214}
     - Class: 114
-      Script: {instanceID: 25648}
+      Script: {instanceID: 25668}
     - Class: 114
-      Script: {instanceID: 68942}
+      Script: {instanceID: 25670}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -725,6 +725,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnCollisionExit2DMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 935d9926ed1ff06ca59a7044d2ce412e
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: AudioManager
   - hash:
       serializedVersion: 2
       Hash: 709e7a14fd69c48de1a0f460ef868042
@@ -1379,12 +1385,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 935d9926ed1ff06ca59a7044d2ce412e
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: AudioManager
   platform: 19
   scenePathNames:
   - Assets/Scenes/Menu.unity

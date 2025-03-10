@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 97
+  controlID: 98
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,8 +140,8 @@ MonoBehaviour:
     y: 0
     width: 396
     height: 1299
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 50
+  controlID: 39
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -246,8 +246,8 @@ MonoBehaviour:
     y: 0
     width: 709
     height: 1299
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -298,7 +298,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Card/CardDef/Robot
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -306,16 +306,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Card/CardDef/Robot
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Duporge\Desktop\Card_game\card_game\card_game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 9e640000
-    m_LastClickedID: 25758
-    m_ExpandedIDs: 0000000076640000786400007a6400007c6400008c640000e4ed000000ca9a3b
+    m_SelectedIDs: 847a0000
+    m_LastClickedID: 31364
+    m_ExpandedIDs: 00000000886400008a6400008c6400008e6400009e640000767a000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -343,7 +343,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000076640000786400007a6400007c640000
+    m_ExpandedIDs: 00000000886400008a6400008c6400008e640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -438,7 +438,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 166ffeffb272fefff872fefff077feff1478feffb27cfeff9a85feffe085feffbc8afeffe08afeffc88efeff0e8ffeff0694feff4894feff2e96feffa49cfeff98adfeff56b4feff34bbfeff54c7feffc8d4feffe2f8feff90fefeff4afffeffb00effff1c10ffff1c15ffffba1affffaa27ffff7a2cffff0244ffffb252ffff1658ffff0860ffffd68bffff6890ffff6a97ffffae97ffffde9effff249fffff9cacffff22aeffffe0b5ffff7ecfffffa4ecffff10f0ffff56f0ffff4af5ffff70f5fffff8f5ffff1afbfffff4ffffff7a620000aa630000e66f00000c7000001c70000028700000387000006a70000092700000ba700000ce700000ee7000000871000016710000367100006c870000ae87000024880000548800006c880000568e0000988e00000e8f00003e8f0000568f00007c950000be9500008e96000070a80000c4d3000012d40000ccd40000e6d40000eade0000fcde00002edf00007cdf0000d0df0000e4df000024e0000036e0000050e0000048f300006af4000048140100641401006a150100f2180100b4190100221a0100521a0100c83d01000c3e0100183e01005a3e0100c23e0100143f01002e3f0100e26a0100fe6a0100066c010016890100a88901004c8a0100648a0100
+      m_ExpandedIDs: 208bffff04c4ffffeedcffff6cddffffa2ddffff96ebffffdcebffffd4f0fffff8f0ffff1afbffff2c6c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -844,9 +844,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -1.667899, y: 0.28848916, z: 0.0022475165}
+    m_Target: {x: 993.9334, y: 628.02515, z: 2.2650368}
     speed: 2
-    m_Value: {x: -1.667899, y: 0.28848916, z: 0.0022475165}
+    m_Value: {x: 993.9334, y: 628.02515, z: 2.2650368}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -896,9 +896,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.0828524
+    m_Target: 874.9497
     speed: 2
-    m_Value: 3.0828524
+    m_Value: 874.9497
   m_Ortho:
     m_Target: 1
     speed: 2

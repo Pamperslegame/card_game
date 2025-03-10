@@ -3261,9 +3261,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 331888469}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: PlayButtonClickSound
+      - m_Target: {fileID: 2055387997}
+        m_TargetAssemblyTypeName: TitleManager, Assembly-CSharp
+        m_MethodName: BP_Exit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

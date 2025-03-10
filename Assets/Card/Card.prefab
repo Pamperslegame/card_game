@@ -185,6 +185,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 363673148f60b6c4cbbdb7f5ebe5f31c, type: 2}
   - {fileID: 11400000, guid: b87a5ecb9898e944480f6ab37593e70d, type: 2}
   - {fileID: 11400000, guid: aa7c723d3310e0444b3cfaeeaba2dc30, type: 2}
+  - {fileID: 11400000, guid: 79a952ec041ae06468ec0d78aa9fc9e1, type: 2}
+  - {fileID: 11400000, guid: d8100c4821737194eb7d1632cbb86f55, type: 2}
+  - {fileID: 11400000, guid: 7ea882f33dbe0a347891d5398c9888fb, type: 2}
+  - {fileID: 11400000, guid: 765afa68f5495d749832e40481ccb61d, type: 2}
+  - {fileID: 11400000, guid: 5e50e020a7dffc64093af864e9632b99, type: 2}
+  - {fileID: 11400000, guid: 977a06ebc6e8eab4c8903dd984eaed1a, type: 2}
+  - {fileID: 11400000, guid: 20cbaddda3d221a43803470c00b3ce3c, type: 2}
+  - {fileID: 11400000, guid: 4829272a0c2fd1548ad1bb03178e402f, type: 2}
+  - {fileID: 11400000, guid: 56680f80151b0db43b7f74e66b536e31, type: 2}
   cardsChampions:
   - {fileID: 11400000, guid: 7a72bdc92330bd744be9fbc411b391e8, type: 2}
 --- !u!114 &1162305940175338735

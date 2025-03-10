@@ -24,12 +24,8 @@ public class TitleManager : MonoBehaviour
 
     public void BP_Exit()
     {
-    #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-    #else
-            Application.Quit();
-    #endif
-        }
+        Application.Quit();
+    }
 
     public void Rules_return()
     {

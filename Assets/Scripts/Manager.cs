@@ -48,6 +48,8 @@ public class Manager : MonoBehaviour
 
     public void BackMenu()
     {
+        Player3.SetActive(false);
+        Player4.SetActive(false);
         SceneManager.LoadScene("Menu");
     }
     public void AffichageGagnant()
@@ -68,7 +70,7 @@ public class Manager : MonoBehaviour
 
         if (backMenuButton != null)
         {
-            backMenuButton.SetActive(true);  // Assure-toi qu'il est activé avant de l'utiliser
+            backMenuButton.SetActive(true);
         }
         else
         {
@@ -321,8 +323,6 @@ public class Manager : MonoBehaviour
 
     // fin d'un round 2 phases attack et préparation
     public void EndRound() {
-
-        CheckGagnantEtPerdant();
 
         string[] joueurName = { Player1Name.text, Player2Name.text, Player3Name.text, Player4Name.text };
         int[] joueurGold = { GoldJoueur1, GoldJoueur2, GoldJoueur3, GoldJoueur4 };
