@@ -26,6 +26,12 @@ public class Manager : MonoBehaviour
 
     #endregion
 
+    // le jeu est terminé et j'affiche le gagnant
+    public void AffichageGagnant(int gagnant)
+    {
+        Debug.Log(gagnant);
+    }
+
     void Start()
     {
         PlayerInit();
@@ -41,6 +47,7 @@ public class Manager : MonoBehaviour
         CheckGagnantEtPerdant();
     }
 
+    // bouton pour forfate un joueur
     public void BP_Forfate()
     {
         PlayerInGame[currentPlayer-1] = false;
@@ -60,7 +67,7 @@ public class Manager : MonoBehaviour
         }
     }
 
-    // maj gold sur plateau
+    // maj gold all joueur sur plateau
     public void MajGold()
     {
 
@@ -70,7 +77,7 @@ public class Manager : MonoBehaviour
         if (PlayerInGame[3]) Player4Gold.text = "Gold :" + GoldJoueur4.ToString();
     }
 
-    // add gold a un joueur
+    // add gold a un joueur spécifique
     public void AddGold(int GoldLost,int currentPlayer)
     {
         switch (currentPlayer)
@@ -83,14 +90,34 @@ public class Manager : MonoBehaviour
 
     }
 
-    public void AffichageGagnant(int gagnant)
+
+
+    // si y'a qu'un seul joueur ça va return un indice
+    public int GetLastPlayerIndex()
     {
-        Debug.Log(gagnant);
+        int lastIndex = 0;
+        int count = 0;
+
+        for (int i = 0; i < PlayerInGame.Length; i++)
+        {
+            if (PlayerInGame[i])
+            {
+                count++;
+                lastIndex = i + 1;
+            }
+        }
+
+        return (count == 1) ? lastIndex : 0;
     }
 
     // check si ya gagnant et afficher qui a gagné avec bouton retour
     public void CheckGagnantEtPerdant()
     {
+        // si y'a plus qu'un seul gars
+        int gagnant = GetLastPlayerIndex();
+        if (gagnant != 0) AffichageGagnant(GetLastPlayerIndex());
+
+        // Si un gars a dépassé 1k gold gg a lui
         if (GoldJoueur1 > 1000) AffichageGagnant(1);
         if (GoldJoueur2 > 1000) AffichageGagnant(2);
         if (GoldJoueur3 > 1000) AffichageGagnant(3);
@@ -136,30 +163,37 @@ public class Manager : MonoBehaviour
     // mettre a jour l'UI si forfate ou alors 
     public void MajDisplayPlayers()
     {
-            if (!PlayerInGame[0])
+        // si y'a 0 cartes le joueurs est perdu
+        if (DeckPlayer1.transform.childCount == 0) PlayerInGame[0] = false;
+        if (DeckPlayer2.transform.childCount == 0) PlayerInGame[1] = false;
+        if (DeckPlayer3.transform.childCount == 0) PlayerInGame[2] = false;
+        if (DeckPlayer4.transform.childCount == 0) PlayerInGame[3] = false;
+
+        // Si le joueur est perdu alors on supprime son UI
+        if (!PlayerInGame[0])
             {
                 DeckPlayer1.SetActive(false);
-                Player1Gold.text = "Hors Jeu";
+                Player1Gold.text = "Perdu !";
 
             }
-            if (!PlayerInGame[1])
-            {
-                DeckPlayer2.SetActive(false);
-                Player2Gold.text = "Hors Jeu";
+        if (!PlayerInGame[1])
+        {
+            DeckPlayer2.SetActive(false);
+            Player2Gold.text = "Perdu !";
 
-            }
-            if (!PlayerInGame[2])
-            {
-                DeckPlayer3.SetActive(false);
-                Player3Gold.text = "Hors Jeu";
+        }
+        if (!PlayerInGame[2])
+        {
+            DeckPlayer3.SetActive(false);
+            Player3Gold.text = "Perdu !";
 
-            }
-            if (!PlayerInGame[3])
-            {
-                DeckPlayer4.SetActive(false);
-                Player4Gold.text = "Hors Jeu";
+        }
+        if (!PlayerInGame[3])
+        {
+            DeckPlayer4.SetActive(false);
+            Player4Gold.text = "Perdu !";
 
-            }
+        }
     }
 
 
@@ -173,6 +207,7 @@ public class Manager : MonoBehaviour
     }
 
 
+    // afficher les events
     public void DisplayEvent(string Event)
     {
         menu_event.text = Event.ToString();
@@ -214,6 +249,7 @@ public class Manager : MonoBehaviour
             // DeckPlayer1.transform.childCount on rajoute le nombre de carte fois le nombre de gold (event) 50 % de chance
             if (Random.Range(0, 100) > 50)
             {
+                DisplayEvent("+10 golds pour chaques cartes sur votre main!");
                 AddGold(DeckPlayer1.transform.childCount * 10, 1); AddGold(DeckPlayer2.transform.childCount * 10, 2); AddGold(DeckPlayer3.transform.childCount * 10, 3); AddGold(DeckPlayer4.transform.childCount * 10, 4);
             }
         }

@@ -168,8 +168,20 @@ ScriptsOnlyBuild:
     fullTypeName: CardAttack
     methodName: OnClick
   - assembly: Assembly-CSharp
+    fullTypeName: CardAttack
+    methodName: OnClick
+  - assembly: Assembly-CSharp
+    fullTypeName: CardAttack
+    methodName: OnClick
+  - assembly: Assembly-CSharp
+    fullTypeName: CardAttack
+    methodName: OnClick
+  - assembly: Assembly-CSharp
     fullTypeName: Manager
     methodName: EndRound
+  - assembly: Assembly-CSharp
+    fullTypeName: Manager
+    methodName: BP_Forfate
   - assembly: Assembly-CSharp
     fullTypeName: Manager
     methodName: pioche
@@ -617,7 +629,7 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
-      Hash: d3cd511e430a2b8ad5be2a182b22a4c7
+      Hash: d4e81fcc2643d2a6d8de6bab2b913fb3
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: Manager
@@ -1333,5 +1345,5 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: C:/Users/Duporge/Desktop/Card_game/card_game/card_game/Ouput/My project
+  playerPath: C:/Users/Duporge/Desktop/Card_game/card_game/card_game/Output/My project
     (1).exe

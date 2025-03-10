@@ -64,7 +64,7 @@ public class CardAttack : MonoBehaviour
         int rdmAbsorbe = Random.Range(0, 100);
         int rdmRetentless = Random.Range(0, 100);
 
-        int luckPassive = 15;
+        int luckPassive = 10;
 
         // je récupère les stats des joueurs
         TMPro.TextMeshProUGUI[] enemiePlayerStats = Enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
@@ -96,7 +96,7 @@ public class CardAttack : MonoBehaviour
         {
             if (rdmRevive < luckPassive)
             {
-                enemiePlayerStats[1].text = "50"; 
+                enemiePlayerStats[1].text = "30";
                 manager.DisplayEvent("Revive !");
             }
             else
