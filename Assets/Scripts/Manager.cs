@@ -1,6 +1,7 @@
-using System.ComponentModel;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Manager : MonoBehaviour
     [SerializeField] private TMP_Text menu_joueur, menu_round, menu_phase,menu_event;
 
     [SerializeField] private GameObject DeckPlayer1, DeckPlayer2, DeckPlayer3, DeckPlayer4;
+
+    [SerializeField] private GameObject backMenuButton;
 
     private TMP_Text Player1Name, Player2Name, Player3Name, Player4Name;
 
@@ -26,7 +29,11 @@ public class Manager : MonoBehaviour
     public bool FinishGame = false;
     #endregion
 
-    // le jeu est terminé et j'affiche le gagnant
+
+    public void BackMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public void AffichageGagnant()
     {
         FinishGame = true;
@@ -37,6 +44,20 @@ public class Manager : MonoBehaviour
         Destroy(DeckPlayer2);
         Destroy(DeckPlayer3);
         Destroy(DeckPlayer4);
+        Destroy(GameObject.Find("Pioche"));
+        Destroy(GameObject.Find("UI/Menu/EndRound"));
+        Destroy(GameObject.Find("UI/Menu/FF"));
+
+        backMenuButton.SetActive(true);
+
+        if (backMenuButton != null)
+        {
+            backMenuButton.SetActive(true);  // Assure-toi qu'il est activé avant de l'utiliser
+        }
+        else
+        {
+            Debug.Log("BackMenu button not found!");
+        }
 
         menu_event.text = "Partie terminée !";
         Player1Gold.text = "";
@@ -46,15 +67,16 @@ public class Manager : MonoBehaviour
 
         if (PlayerInGame[0] == true) Player1Name.text = "Winner !"; else Player1Name.text = "Looser skill issue!";
         if (PlayerInGame[1] == true) Player2Name.text = "Winner !"; else Player2Name.text = "Looser skill issue!";
-        if (PlayerInGame[2] == true && GameManager.joueurs == 3) Player3Name.text = "Winner !"; else Player3Name.text = "Looser skill issue!";
-        if (PlayerInGame[3] == true && GameManager.joueurs == 4) Player4Name.text = "Winner !"; else Player4Name.text = "Looser skill issue!";
-
+        if (PlayerInGame[2] == true && GameManager.joueurs > 2) Player3Name.text = "Winner !"; else Player3Name.text = "Looser skill issue!";
+        if (PlayerInGame[3] == true && GameManager.joueurs > 3) Player4Name.text = "Winner !"; else Player4Name.text = "Looser skill issue!";
+        
     }
 
     void Start()
     {
         PlayerInit();
         RoundInit();
+        backMenuButton.SetActive(false);
     }
 
     private void Update()
