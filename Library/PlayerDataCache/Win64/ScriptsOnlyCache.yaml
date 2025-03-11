@@ -10,7 +10,6 @@ ScriptsOnlyBuild:
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Animation.Runtime.dll:
-    - UnityEngine.U2D.Animation.BufferManager
     - UnityEngine.U2D.Animation.SpriteSkinComposite
     - UnityEngine.U2D.Animation.SpriteSkinUpdateHelper
     Unity.2D.IK.Editor.dll:
@@ -192,6 +191,9 @@ ScriptsOnlyBuild:
     fullTypeName: CardAttack
     methodName: OnClick
   - assembly: Assembly-CSharp
+    fullTypeName: CardAttack
+    methodName: OnClick
+  - assembly: Assembly-CSharp
     fullTypeName: Manager
     methodName: EndRound
   - assembly: Assembly-CSharp
@@ -212,9 +214,6 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: AudioManager
     methodName: PlayButtonClickSound
-  - assembly: Assembly-CSharp
-    fullTypeName: CardAttack
-    methodName: OnClick
   sceneClasses:
     Assets/Scenes/GameScene.unity:
     - Class: 1
@@ -270,7 +269,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 8666}
     - Class: 114
-      Script: {instanceID: 25668}
+      Script: {instanceID: 25604}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -345,9 +344,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 8214}
     - Class: 114
-      Script: {instanceID: 25668}
+      Script: {instanceID: 25604}
     - Class: 114
-      Script: {instanceID: 25670}
+      Script: {instanceID: 26380}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128

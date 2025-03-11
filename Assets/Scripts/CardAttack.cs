@@ -59,10 +59,6 @@ public class CardAttack : MonoBehaviour
     // attaquer un joueur
     void Attack(CardAttack Attaquant, CardAttack Enemie)
     {
-        if (Random.Range(1,10) > 5)
-        {
-            manager.PlayRandomAttackSound();
-        }
         int rdmRevive = Random.Range(0, 100);
         int rdmAbsorbe = Random.Range(0, 100);
         int rdmRetentless = Random.Range(0, 100);
@@ -83,12 +79,10 @@ public class CardAttack : MonoBehaviour
         {
             enemyHP -= attackerDamage * 2;
             manager.DisplayEvent("Retentless !");
-            Debug.Log("event retentless");
         }
         else if (rdmAbsorbe < luckPassive)
         {
             manager.DisplayEvent("Absorbe !");
-            Debug.Log("event absorbe");
         }
         else enemyHP -= attackerDamage;
 
@@ -98,6 +92,9 @@ public class CardAttack : MonoBehaviour
         // si hp <= 0 je supprime la carte et je décrémente le countcard de l'énemie ainsi que les modifs de gold
         if (enemyHP <= 0)
         {
+
+            manager.PlayRandomAttackSound();
+            
             if (rdmRevive < luckPassive)
             {
                 enemiePlayerStats[1].text = "30";
@@ -119,7 +116,8 @@ public class CardAttack : MonoBehaviour
             }
         }
         // Une seule attaque et c'est au tour du joueur suivant
-            manager.EndRound();
+        manager.DisplayEvent("");
+        manager.EndRound();
     }
 
     int GetPlayerNumber(string playerName)
