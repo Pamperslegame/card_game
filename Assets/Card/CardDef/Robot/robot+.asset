@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbaa1078dc67ce438f6d7c85df86504, type: 3}
   m_Name: robot+
   m_EditorClassIdentifier: 
-  pv: 100
+  pv: 50
   damage: 25
   rarity: 3
   rarity2: {fileID: 21300000, guid: a5d342830eb122c47b891343591b01b6, type: 3}

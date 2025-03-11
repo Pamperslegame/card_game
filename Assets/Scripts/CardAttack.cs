@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -49,7 +49,7 @@ public class CardAttack : MonoBehaviour
     // pour avoir nom du joueur (qui est aussi le tag)
     public string GetPlayerName(int currentPlayer)
     {
-        // Vérifie que le joueur est toujours actif
+        // VÃ©rifie que le joueur est toujours actif
         if (currentPlayer < 1 || currentPlayer > 4 || !manager.PlayerInGame[currentPlayer - 1])
             return "Invalid";
 
@@ -63,9 +63,13 @@ public class CardAttack : MonoBehaviour
         int rdmAbsorbe = Random.Range(0, 100);
         int rdmRetentless = Random.Range(0, 100);
 
-        int luckPassive = 10;
+        int luckRevive = 30;
+        int luckAbsorbe = 20;
+        int luckRetentless = 10;
 
-        // je récupère les stats des joueurs
+
+
+        // stats des joueurs
         TMPro.TextMeshProUGUI[] enemiePlayerStats = Enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
         TMPro.TextMeshProUGUI[] attaquantPlayerStats = Attaquant.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
 
@@ -75,48 +79,51 @@ public class CardAttack : MonoBehaviour
         int attackerDamage = int.Parse(attaquantPlayerStats[0].text);
 
         // gestion moche des passifs :
-        if (rdmRetentless < luckPassive)
+        if (rdmRetentless < luckRetentless)
         {
             enemyHP -= attackerDamage * 2;
             manager.DisplayEvent("Retentless !");
         }
-        else if (rdmAbsorbe < luckPassive)
+        else if (rdmAbsorbe < luckAbsorbe)
         {
             manager.DisplayEvent("Absorbe !");
         }
-        else enemyHP -= attackerDamage;
 
-        // set le nouveau hp sur l'attaqué
+        else
+        {
+            enemyHP -= attackerDamage;
+        }
+
+        // set le nouveau hp sur l'attaquï¿½
         enemiePlayerStats[1].text = enemyHP.ToString();
 
-        // si hp <= 0 je supprime la carte et je décrémente le countcard de l'énemie ainsi que les modifs de gold
+        // si hp <= 0 je supprime la carte et je dï¿½crï¿½mente le countcard de l'ï¿½nemie ainsi que les modifs de gold
         if (enemyHP <= 0)
         {
 
             manager.PlayRandomAttackSound();
-            
-            if (rdmRevive < luckPassive)
+
+            if (rdmRevive < luckRevive)
             {
                 enemiePlayerStats[1].text = "30";
                 manager.DisplayEvent("Revive !");
             }
             else
             {
+
                 int enemyPlayerNumber = GetPlayerNumber(Enemie.transform.parent.name);
                 Destroy(Enemie.gameObject);
 
-                // retirer gold au joueur attaqué
+                // retirer gold au joueur attaquï¿½
                 manager.AddGold(-5, enemyPlayerNumber);
 
-                // ajouter gold au joueur qui a attaaqué
+                // ajouter gold au joueur qui a attaaquï¿½
                 manager.AddGold(5, manager.currentPlayer);
 
-                // décrémenter soncompteur
+                // dï¿½crï¿½menter soncompteur
                 manager.DecrementationCountCard(enemyPlayerNumber);
             }
         }
-        // Une seule attaque et c'est au tour du joueur suivant
-        manager.DisplayEvent("");
         manager.EndRound();
     }
 
@@ -128,7 +135,7 @@ public class CardAttack : MonoBehaviour
             case "DeckJoueur2": return 2;
             case "DeckJoueur3": return 3;
             case "DeckJoueur4": return 4;
-            default: return 0; // Ou gérer autrement si c'est un cas invalide
+            default: return 0; // Ou gÃ©rer autrement si c'est un cas invalide
         }
     }
 

@@ -190,7 +190,7 @@ public class Manager : MonoBehaviour
             return;
         }
 
-        int goldMax = 500;
+        int goldMax = 300;
         bool goldWinnerFound = false;
 
         if (GoldJoueur1 > goldMax)
