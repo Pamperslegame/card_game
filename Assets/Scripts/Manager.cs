@@ -33,6 +33,20 @@ public class Manager : MonoBehaviour
     public AudioClip[] attackSounds;
     #endregion
 
+    private int startingPlayerForPhase;
+
+
+    private int GetFirstActivePlayer()
+    {
+        for (int i = 0; i < PlayerInGame.Length; i++)
+        {
+            if (PlayerInGame[i])
+            {
+                return i + 1; // Les joueurs sont indexés à partir de 1
+            }
+        }
+        return -1; // Gérer le cas où tous les joueurs sont éliminés
+    }
 
     // Jouer un son d'attaque aléatoire
     private AudioSource audioSource;
@@ -45,7 +59,7 @@ public class Manager : MonoBehaviour
             audioSource.PlayOneShot(attackSounds[randomIndex]);
         }
     }
-
+    
     public void BackMenu()
     {
         Player3.SetActive(false);
@@ -96,6 +110,8 @@ public class Manager : MonoBehaviour
         PlayerInit();
         RoundInit();
         backMenuButton.SetActive(false);
+        startingPlayerForPhase = GetFirstActivePlayer();
+        currentPlayer = startingPlayerForPhase;
     }
 
     private void Update()
@@ -321,45 +337,54 @@ public class Manager : MonoBehaviour
 
 
 
-    // fin d'un round 2 phases attack et préparation
-    public void EndRound() {
-
+    public void EndRound()
+    {
         string[] joueurName = { Player1Name.text, Player2Name.text, Player3Name.text, Player4Name.text };
-        int[] joueurGold = { GoldJoueur1, GoldJoueur2, GoldJoueur3, GoldJoueur4 };
 
-        // verif de si le joueur a abandonné ou alors a perdu
         do
         {
             currentPlayer = (currentPlayer % GameManager.joueurs) + 1;
         } while (!PlayerInGame[currentPlayer - 1]);
 
-
         menu_joueur.text = joueurName[currentPlayer - 1].ToString();
 
-
-        if (currentPlayer == 1 && currentPhase == 1)
+        if (!PlayerInGame[startingPlayerForPhase - 1])
         {
-            currentPhase++;
-            menu_event.text = "";
-            menu_phase.text = "Phase : Attack";
-
+            startingPlayerForPhase = GetFirstActivePlayer();
+            if (startingPlayerForPhase == -1) return; 
         }
 
-        else if (currentPlayer == 1 && currentPhase == 2)
+        if (currentPlayer == startingPlayerForPhase)
         {
-            currentPhase--;
-            currentRound += 1;
-            menu_event.text = "";
-            menu_phase.text = "Phase : Preparation";
-            menu_round.text = "Round :" + currentRound.ToString();
-
-            // DeckPlayer1.transform.childCount on rajoute le nombre de carte fois le nombre de gold (event) 50 % de chance
-            if (Random.Range(0, 100) > 50)
+            if (currentPhase == 1)
             {
-                DisplayEvent("+10 golds pour chaques cartes sur votre main!");
-                AddGold(DeckPlayer1.transform.childCount * 10, 1); AddGold(DeckPlayer2.transform.childCount * 10, 2); AddGold(DeckPlayer3.transform.childCount * 10, 3); AddGold(DeckPlayer4.transform.childCount * 10, 4);
+                currentPhase = 2;
+                menu_event.text = "";
+                menu_phase.text = "Phase : Attack";
+                startingPlayerForPhase = GetFirstActivePlayer();
+                currentPlayer = startingPlayerForPhase;
+            }
+            else if (currentPhase == 2)
+            {
+                currentPhase = 1;
+                currentRound++;
+                menu_event.text = "";
+                menu_phase.text = "Phase : Preparation";
+                menu_round.text = "Round :" + currentRound.ToString();
+                startingPlayerForPhase = GetFirstActivePlayer();
+                currentPlayer = startingPlayerForPhase;
+
+                if (Random.Range(0, 100) > 50)
+                {
+                    DisplayEvent("+10 golds pour chaques cartes sur votre main!");
+                    AddGold(DeckPlayer1.transform.childCount * 10, 1);
+                    AddGold(DeckPlayer2.transform.childCount * 10, 2);
+                    AddGold(DeckPlayer3.transform.childCount * 10, 3);
+                    AddGold(DeckPlayer4.transform.childCount * 10, 4);
+                }
             }
         }
+
         CheckGagnantEtPerdant();
     }
 

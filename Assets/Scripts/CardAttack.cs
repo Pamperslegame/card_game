@@ -78,6 +78,7 @@ public class CardAttack : MonoBehaviour
         int enemyHP = int.Parse(enemiePlayerStats[1].text);
         int attackerDamage = int.Parse(attaquantPlayerStats[0].text);
 
+        // gestion moche des passifs :
         if (rdmRetentless < luckPassive)
         {
             enemyHP -= attackerDamage * 2;
