@@ -12,6 +12,20 @@ public class CardAttack : MonoBehaviour
     [SerializeField] private Manager manager;
 
 
+    private int luckPassive = 25; 
+
+    public int GetLuckPassive()
+    {
+        return luckPassive;
+    }
+
+    public void SetLuckPassive(int value)
+    {
+        luckPassive = value;
+    }
+
+
+
     private void Awake()
     {
         manager = GameObject.Find("Manager").GetComponent<Manager>();
@@ -22,7 +36,7 @@ public class CardAttack : MonoBehaviour
         if (manager.currentPhase == 2)
         {
 
-                string namePlayer = GetPlayerName(manager.currentPlayer);
+            string namePlayer = GetPlayerName(manager.currentPlayer);
             Transform playerDeck = GameObject.FindWithTag(namePlayer).transform;
 
             bool isMyCard = transform.IsChildOf(playerDeck);
@@ -49,82 +63,88 @@ public class CardAttack : MonoBehaviour
     // pour avoir nom du joueur (qui est aussi le tag)
     public string GetPlayerName(int currentPlayer)
     {
-        // Vérifie que le joueur est toujours actif
+        // V�rifie que le joueur est toujours actif
         if (currentPlayer < 1 || currentPlayer > 4 || !manager.PlayerInGame[currentPlayer - 1])
             return "Invalid";
 
         return $"Joueur{currentPlayer}";
     }
 
-    // attaquer un joueur
-    void Attack(CardAttack Attaquant, CardAttack Enemie)
+    public void Attack(CardAttack attaquant, CardAttack enemie)
     {
-        int rdmRevive = Random.Range(0, 100);
-        int rdmAbsorbe = Random.Range(0, 100);
-        int rdmRetentless = Random.Range(0, 100);
+        int damage = CalculateDamage(attaquant);
+        ApplyDamage(enemie, damage);
+    }
 
-        int luckRevive = 30;
-        int luckAbsorbe = 20;
-        int luckRetentless = 10;
+    private int CalculateDamage(CardAttack attaquant)
+    {
+        int attackerDamage = int.Parse(attaquant.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0].text);
 
-
-
-        // stats des joueurs
-        TMPro.TextMeshProUGUI[] enemiePlayerStats = Enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI[] attaquantPlayerStats = Attaquant.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-
-
-        // je fais la soustraction x2 si y'a retentless
-        int enemyHP = int.Parse(enemiePlayerStats[1].text);
-        int attackerDamage = int.Parse(attaquantPlayerStats[0].text);
-
-        // gestion moche des passifs :
-        if (rdmRetentless < luckRetentless)
+        if (IsRelentlessTriggered())
         {
-            enemyHP -= attackerDamage * 2;
-            manager.DisplayEvent("Retentless !");
+            manager.DisplayEvent("Relentless !");
+            return attackerDamage * 2;
         }
-        else if (rdmAbsorbe < luckAbsorbe)
+
+        if (IsAbsorbeTriggered())
         {
             manager.DisplayEvent("Absorbe !");
+            return 0;
         }
 
-        else
-        {
-            enemyHP -= attackerDamage;
-        }
+        return attackerDamage;
+    }
 
-        // set le nouveau hp sur l'attaqu�
-        enemiePlayerStats[1].text = enemyHP.ToString();
+    private bool IsRelentlessTriggered()
+    {
+        return Random.Range(0, 100) < luckPassive;
+    }
 
-        // si hp <= 0 je supprime la carte et je d�cr�mente le countcard de l'�nemie ainsi que les modifs de gold
+    private bool IsAbsorbeTriggered()
+    {
+        return Random.Range(0, 100) < luckPassive;
+    }
+
+    private void ApplyDamage(CardAttack enemie, int damage)
+    {
+        TMPro.TextMeshProUGUI[] enemieStats = enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+        int enemyHP = int.Parse(enemieStats[1].text);
+        enemyHP -= damage;
+        enemieStats[1].text = enemyHP.ToString();
+
         if (enemyHP <= 0)
         {
-
-            manager.PlayRandomAttackSound();
-
-            if (rdmRevive < luckRevive)
-            {
-                enemiePlayerStats[1].text = "30";
-                manager.DisplayEvent("Revive !");
-            }
-            else
-            {
-
-                int enemyPlayerNumber = GetPlayerNumber(Enemie.transform.parent.name);
-                Destroy(Enemie.gameObject);
-
-                // retirer gold au joueur attaqu�
-                manager.AddGold(-5, enemyPlayerNumber);
-
-                // ajouter gold au joueur qui a attaaqu�
-                manager.AddGold(5, manager.currentPlayer);
-
-                // d�cr�menter soncompteur
-                manager.DecrementationCountCard(enemyPlayerNumber);
-            }
+            HandleDeath(enemie);
         }
+        else
+        {
+            manager.EndRound();
+        }
+    }
+
+    private void HandleDeath(CardAttack enemie)
+    {
+        if (IsReviveTriggered())
+        {
+            enemie.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1].text = "30";
+            manager.DisplayEvent("Revive !");
+        }
+        else
+        {
+            int enemyPlayerNumber = GetPlayerNumber(enemie.transform.parent.name);
+            Destroy(enemie.gameObject);
+            manager.AddGold(-5, enemyPlayerNumber);
+            manager.AddGold(5, manager.currentPlayer);
+            manager.DecrementationCountCard(enemyPlayerNumber);
+            manager.PlayRandomAttackSound();
+        }
+
         manager.EndRound();
+    }
+
+    private bool IsReviveTriggered()
+    {
+        return Random.Range(0, 100) < luckPassive;
     }
 
     int GetPlayerNumber(string playerName)
@@ -135,7 +155,7 @@ public class CardAttack : MonoBehaviour
             case "DeckJoueur2": return 2;
             case "DeckJoueur3": return 3;
             case "DeckJoueur4": return 4;
-            default: return 0; // Ou gérer autrement si c'est un cas invalide
+            default: return 0; // Ou g�rer autrement si c'est un cas invalide
         }
     }
 
